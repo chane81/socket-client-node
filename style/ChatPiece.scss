@@ -1,0 +1,55 @@
+@import 'global.scss';
+
+.chat-msg-wrap {
+	width: 100%;
+	display: flex;
+	flex-flow: row wrap;
+
+	.chat-msg {
+		margin: 1rem 1rem;
+		padding: 0.1rem 1rem;
+		max-width: 25rem;
+		min-height: 3rem;
+		border-radius: 1.5rem;
+		display: flex;
+		flex-flow: row wrap;
+		justify-content: start;
+		align-items: center;
+
+		span {
+			width: 70%;
+		}
+
+		.chat-picture {
+			width: 3rem;
+			height: 3rem;
+			border: 1px solid white;
+			margin: 0.5rem 1rem 0.5rem -0.5rem;
+			border-radius: 1.5rem;
+		}
+	}
+
+	&.chat-right {
+		justify-content: flex-end;
+
+		div {
+			color: white;
+			background: #845ef7;
+		}
+	}
+
+	&.chat-left {
+		justify-content: flex-start;
+
+		div {
+			color: #495057;
+			background: #dbe4ff;
+		}
+	}
+
+	.chat-nick {
+		font-weight: bold;
+		font-size: 0.7rem;
+		margin-top: 0.3rem;
+	}
+}

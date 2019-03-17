@@ -1,0 +1,66 @@
+{
+  "extends": [
+    "tslint-config-standard",
+    "tslint:latest",
+    "tslint-react"
+  ],
+  "rules": {
+    "semicolon": false,
+    "strict-type-predicates": false,
+    "trailing-comma": false,
+    "no-consecutive-blank-lines": true,
+    "indent": [true, "tabs"],
+    "jsx-wrap-multiline": false,
+    "quotemark": [true, "single", "jsx-single"],
+    "jsx-no-lambda": false,
+    "jsx-no-multiline-js": false,
+    "max-line-length": false,
+    "no-console": false,
+    "no-object-literal-type-assertion": false,
+    "no-submodule-imports": [
+      true,
+      "next"
+    ],
+    "no-unused-variable": false,
+    "space-before-function-paren": false,
+    "ter-indent": [true, "tab"],
+    "typedef-whitespace": [
+      true,
+      {
+        "call-signature": "nospace",
+        "index-signature": "nospace",
+        "parameter": "nospace",
+        "property-declaration": "nospace",
+        "variable-declaration": "nospace"
+      },
+      {
+        "call-signature": "space",
+        "index-signature": "space",
+        "parameter": "space",
+        "property-declaration": "space",
+        "variable-declaration": "space"
+      }
+    ],
+    "whitespace": [
+      true,
+      "check-branch",
+      "check-decl",
+      "check-operator",
+      "check-module",
+      "check-preblock",
+      "check-rest-spread",
+      "check-separator",
+      "check-typecast",
+      "check-type-operator"
+    ]
+  },
+  "linterOptions": {
+    "exclude": [
+      "bin",
+      "config.js",
+      "tsconfig.json",
+      "next.config.js",
+      "*.js"
+    ]
+  }
+}

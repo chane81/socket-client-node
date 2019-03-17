@@ -1,0 +1,67 @@
+@import 'global.scss';
+
+.chat-wrap {
+	border: 1px solid #ced4da;
+	border-radius: 5px;
+	input:focus {
+		outline: none;
+	}
+
+	.chat-box {
+		margin: 1rem;
+		border: 1px solid #e9ecef;
+		background: white;
+		height: 45vh;
+		border-radius: 0 5px 5px 0;
+		overflow-y: auto;
+	}
+
+	.chat-input-box {
+		background: white;
+		height: 50px;
+		line-height: 50px;
+		border: 1px solid #e9ecef;
+		border-radius: 5px;
+		margin: 0 1rem 1rem 1rem;
+
+		&:hover {
+			cursor: pointer;
+		}
+
+		input {
+			width: 75%;
+			border-style: none;
+			font-size: 0.9rem;
+			text-align: center;
+		}
+	}
+
+	.btn-add-container {
+		float: right;
+		background: linear-gradient(to right, #6478fb, #8763fb);
+		display: block;
+		width: 3rem;
+		border-radius: 0 5px 5px 0;
+
+		&:hover {
+			cursor: pointer;
+		}
+	}
+
+	.btn-out-container {
+		float: left;
+		background: linear-gradient(to right, #6478fb, #8763fb);
+		display: block;
+		width: 3rem;
+		border-radius: 5px 0 0 5px;
+
+		&:hover {
+			cursor: pointer;
+		}
+	}
+
+	.btn-icon {
+		color: white;
+		vertical-align: middle;
+	}
+}
