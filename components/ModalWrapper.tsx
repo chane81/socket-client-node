@@ -48,7 +48,7 @@ class ModalWrapper extends Component<IProps> {
 								className='nicknm-input'
 								ref={this.txtNickBox}
 								type='text'
-								placeholder='별명을 입력해주세요!!'
+								placeholder='별명을 입력해주세요!'
 								onKeyPress={this.handleSendKeyPress}
 							/>
 							<span className='nicknm-btn-add' onClick={this.handleClick}>

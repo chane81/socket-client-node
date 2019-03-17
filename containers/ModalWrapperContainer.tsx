@@ -67,7 +67,14 @@ const ModalWrapperContainer: React.FC<IProps> = ({ store }) => {
 		}
 	};
 
-	return <ModalWrapper isVisible={getModalVisible} handleNickRegist={handleNickRegist} />;
+	return (
+		<ModalWrapper
+			isVisible={getModalVisible}
+			handleNickRegist={handleNickRegist}
+		/>
+	);
 };
 
-export default inject(({ store }) => ({ store }))(observer(ModalWrapperContainer));
+export default inject(({ store }) => ({ store }))(
+	observer(ModalWrapperContainer)
+);
