@@ -58,6 +58,7 @@ git add .
 git commit -m "수정내역"
 git push -f heroku master
 heroku logs -t
+heroku logs -a socket-client-node -t
 ```
 
 ## styled-jsx 를 쓸 때 유의점
