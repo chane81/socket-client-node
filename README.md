@@ -123,6 +123,6 @@ heroku logs -a socket-client-node -t
   ```
 
 ## Screenshot
-- [그림1]
+- &nbsp;
 
   ![](/static/images/screen1.png)
