@@ -121,3 +121,8 @@ heroku logs -a socket-client-node -t
     input { width: 100px; }
   `}</style>
   ```
+
+## Screenshot
+- [그림1]
+
+  ![](/static/images/screen1.png)

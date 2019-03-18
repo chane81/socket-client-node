@@ -3,12 +3,14 @@
 .chat-wrap {
 	border: 1px solid #ced4da;
 	border-radius: 5px;
+	height: calc(100vh - 12px);
 	input:focus {
 		outline: none;
 	}
 
 	.users-and-chat {
 		display: flex;
+		height: calc(100vh - 70px);
 	}
 
 	.user-wrap {
@@ -16,7 +18,7 @@
 		border: 1px solid #e9ecef;
 		border-right: 0px;
 		background: #e9ecef;
-		height: 45vh;
+		// height: 45vh;
 		overflow-y: auto;
 		min-width: 75px;
 	}
@@ -26,7 +28,7 @@
 		border: 1px solid #e9ecef;
 		border-left: 0px;
 		background: white;
-		height: 45vh;
+		// height: 45vh;
 		border-radius: 0 5px 5px 0;
 		overflow-y: auto;
 		width: calc(100% - 75px);
