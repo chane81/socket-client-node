@@ -61,8 +61,6 @@ const ModalWrapperContainer: React.FC<IProps> = ({ store }) => {
 
 			// 접속 사용자정보들 push
 			socketIo.on('client.user.in', (context) => {
-				console.log('client.user.in', context);
-
 				const user = JSON.parse(context);
 
 				setUserIn(user);
@@ -79,10 +77,8 @@ const ModalWrapperContainer: React.FC<IProps> = ({ store }) => {
 				});
 			});
 
-			// 접속끊긴 사용자정보들 pop
+			// 접속끊긴 사용자정보들 remove
 			socketIo.on('client.user.out', (context) => {
-				console.log('client.user.out', context);
-
 				const user = JSON.parse(context);
 
 				setUserOut(user);

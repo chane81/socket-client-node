@@ -1,7 +1,7 @@
 import { Instance, types } from 'mobx-state-tree';
 
 // 유저 모델
-const model = types.model('messageModel', {
+const model = types.model('userModel', {
 	nickId: types.string,
 	nickName: types.string,
 	uniqueId: types.string

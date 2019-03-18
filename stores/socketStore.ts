@@ -82,11 +82,12 @@ const model = types
 			self.users.push({ ...userModel });
 		},
 		// 사용자가 접속 끊었을 시 데이터 pop
-		setUserOut(userModel: IUserModelType) {
-			_.remove(
-				self.users,
-				(data: IUserModelType) => data.uniqueId === userModel.uniqueId
-			);
+		setUserOut(userModel) {
+			// _.remove(self.users, (data) => data.uniqueId === userModel.uniqueId);
+			// _.pullAllBy(self.users, [ { uniqueId: userModel.uniqueId } ], 'uniqueId');
+
+			const idx = _.findIndex(self.users, { uniqueId: userModel.uniqueId });
+			self.users.splice(idx, 1);
 		}
 	}))
 	.views((self) => ({
@@ -99,9 +100,6 @@ const model = types
 		},
 		get getCurrentNickId() {
 			return self.currentNickId;
-		},
-		get getUsers(): IUserModelType[] {
-			return self.users;
 		}
 	}));
 

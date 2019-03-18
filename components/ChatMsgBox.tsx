@@ -1,3 +1,4 @@
+import { JsonWebTokenError } from 'jsonwebtoken';
 import _ from 'lodash';
 import { inject, observer } from 'mobx-react';
 import { onAction, onPatch } from 'mobx-state-tree';
@@ -86,7 +87,7 @@ class ChatMsgBox extends Component<IProps> {
 
 	public render() {
 		const { socketModel } = this.props.store!;
-		const { messages, currentMessage: { message }, getUsers } = socketModel;
+		const { messages, currentMessage: { message }, users } = socketModel;
 
 		const chatPieces = messages.map((data, index) => (
 			<ChatPiece
@@ -98,7 +99,7 @@ class ChatMsgBox extends Component<IProps> {
 			/>
 		));
 
-		const users = getUsers.map((data) => {
+		const userPieces = users.map((data) => {
 			return (
 				<UserPicture
 					nickId={data.nickId}
@@ -111,7 +112,7 @@ class ChatMsgBox extends Component<IProps> {
 		return (
 			<div className={'chat-wrap'}>
 				<div className={'users-and-chat'}>
-					<div className={'user-wrap'}>{users}</div>
+					<div className={'user-wrap'}>{userPieces}</div>
 					<div ref={this.chatBox} className={'chat-box'}>
 						{chatPieces}
 					</div>
