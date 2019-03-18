@@ -5,6 +5,7 @@
     "tslint-react"
   ],
   "rules": {
+    "jsx-boolean-value": false,
     "semicolon": false,
     "strict-type-predicates": false,
     "trailing-comma": false,

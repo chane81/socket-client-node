@@ -1,8 +1,8 @@
+import _ from 'lodash';
 import { flow } from 'mobx';
-import { applyPatch, applySnapshot, types } from 'mobx-state-tree';
-import io from 'socket.io-client';
-import config from '../config.js';
-import messageStore from './messageStore';
+import { applySnapshot, types } from 'mobx-state-tree';
+import messageStore, { IMessageModelType } from './messageStore';
+import userStore, { IUserModelType } from './userStore';
 
 const model = types
 	.model('socketModel', {
@@ -12,49 +12,16 @@ const model = types
 		messages: types.array(messageStore.model),
 		modalVisible: types.boolean,
 		socket: types.frozen(),
-		socketName: types.string
+		socketName: types.string,
+		users: types.array(userStore.model)
 	})
 	.actions((self) => ({
 		// 접속 소켓을 상태값에 넣어주기
-		setSocket(socket): any {
+		setSocket(socket) {
 			self.socket = socket;
 		},
-		// 소켓 커넥션과 이벤트등록
-		setSocketConnect() {
-			if (self.socket === (null as any)) {
-				const socket = io(config.socketServerHost, {
-					query: {
-						socketName: '테스트'
-					},
-					secure: true,
-					transports: [ 'websocket', 'polling' ]
-				});
-
-				// 접속한 소켓 set
-				socket.on('connect', () => {
-					(self as any).setSocket(socket);
-				});
-
-				socket.on('client.msg.receive', (context) => {
-					console.log('받은메시지:', context);
-
-					const receiveMsg = JSON.parse(context);
-
-					// 메시지들 배열에 push
-					(self as any).setMessagesPush({ ...receiveMsg, isSelf: false });
-				});
-
-				socket.on('connect_error', () => {
-					console.log('socket error');
-				});
-
-				socket.on('disconnect', () => {
-					console.log('서버 disconnected!');
-				});
-			}
-		},
 		// 주고 받은 메시지들 push
-		setMessagesPush(messageModel) {
+		setMessagesPush(messageModel: IMessageModelType) {
 			self.messages.push({ ...messageModel });
 		},
 		// 현재 접속한 유저의 닉네임 set
@@ -84,7 +51,10 @@ const model = types
 				alert('메시지를 입력해주세요!');
 			} else {
 				// 소켓 emit
-				yield self.socket.emit('client.msg.send', JSON.stringify(self.currentMessage));
+				yield self.socket.emit(
+					'client.msg.send',
+					JSON.stringify(self.currentMessage)
+				);
 
 				console.log('소켓 send:', JSON.stringify(self.currentMessage));
 
@@ -103,8 +73,20 @@ const model = types
 		setCurrentNickId() {
 			return (self.currentNickId = Math.floor(Math.random() * 50).toString());
 		},
+		// 나가기를 눌렀을 때 쓰는 초기화
 		setInit() {
 			applySnapshot(self, defaultValue);
+		},
+		// 새로운 사용자가 접속시 데이터 push
+		setUserIn(userModel: IUserModelType) {
+			self.users.push({ ...userModel });
+		},
+		// 사용자가 접속 끊었을 시 데이터 pop
+		setUserOut(userModel: IUserModelType) {
+			_.remove(
+				self.users,
+				(data: IUserModelType) => data.uniqueId === userModel.uniqueId
+			);
 		}
 	}))
 	.views((self) => ({
@@ -117,6 +99,9 @@ const model = types
 		},
 		get getCurrentNickId() {
 			return self.currentNickId;
+		},
+		get getUsers(): IUserModelType[] {
+			return self.users;
 		}
 	}));
 

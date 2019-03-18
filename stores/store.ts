@@ -1,4 +1,10 @@
-import { applySnapshot, Instance, SnapshotIn, SnapshotOut, types } from 'mobx-state-tree';
+import {
+	applySnapshot,
+	Instance,
+	SnapshotIn,
+	SnapshotOut,
+	types
+} from 'mobx-state-tree';
 import socketStore from './socketStore';
 
 type IStore = Instance<typeof store>;

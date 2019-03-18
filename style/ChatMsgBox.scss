@@ -7,13 +7,29 @@
 		outline: none;
 	}
 
-	.chat-box {
-		margin: 1rem;
+	.users-and-chat {
+		display: flex;
+	}
+
+	.user-wrap {
+		margin: 0.5rem 0 0.5rem 0.5rem;
 		border: 1px solid #e9ecef;
+		border-right: 0px;
+		background: #e9ecef;
+		height: 45vh;
+		overflow-y: auto;
+		min-width: 75px;
+	}
+
+	.chat-box {
+		margin: 0.5rem 0.5rem 0.5rem 0;
+		border: 1px solid #e9ecef;
+		border-left: 0px;
 		background: white;
 		height: 45vh;
 		border-radius: 0 5px 5px 0;
 		overflow-y: auto;
+		width: calc(100% - 75px);
 	}
 
 	.chat-input-box {
@@ -22,7 +38,7 @@
 		line-height: 50px;
 		border: 1px solid #e9ecef;
 		border-radius: 5px;
-		margin: 0 1rem 1rem 1rem;
+		margin: 0 0.5rem 0.5rem 0.5rem;
 
 		&:hover {
 			cursor: pointer;

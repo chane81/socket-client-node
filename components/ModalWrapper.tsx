@@ -2,7 +2,6 @@ import React, { Component, createRef } from 'react';
 import '../style/ModalWrapper.scss';
 
 interface IProps {
-	store?: any;
 	isVisible: boolean;
 	handleNickRegist: (nickName: string) => void;
 }
@@ -33,13 +32,7 @@ class ModalWrapper extends Component<IProps> {
 
 	public render() {
 		return (
-			<div
-				className={
-
-						this.props.isVisible ? 'show' :
-						'hide'
-				}
-			>
+			<div className={this.props.isVisible ? 'show' : 'hide'}>
 				<div className='nicknm-gray-background' />
 				<div className='nicknm-wrapper'>
 					<div className='nicknm-modal'>

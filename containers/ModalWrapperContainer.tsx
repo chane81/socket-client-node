@@ -1,12 +1,14 @@
+import { JsonWebTokenError } from 'jsonwebtoken';
 import { inject, observer } from 'mobx-react';
 import React from 'react';
 import io from 'socket.io-client';
 import msgpackParser from 'socket.io-msgpack-parser';
 import ModalWrapper from '../components/ModalWrapper';
 import config from '../config.js';
+import { IStore } from '../stores/store';
 
 interface IProps {
-	store?: any;
+	store?: IStore;
 }
 
 const ModalWrapperContainer: React.FC<IProps> = ({ store }) => {
@@ -16,8 +18,10 @@ const ModalWrapperContainer: React.FC<IProps> = ({ store }) => {
 		setSocket,
 		setCurrentNickName,
 		setCurrentNickId,
-		getModalVisible
-	} = store.socketModel;
+		getModalVisible,
+		setUserIn,
+		setUserOut
+	} = store!.socketModel;
 
 	const handleNickRegist = (nickName) => {
 		// 닉네임을 상태에 등록
@@ -53,6 +57,35 @@ const ModalWrapperContainer: React.FC<IProps> = ({ store }) => {
 
 				// 메시지들 배열에 push
 				setMessagesPush({ ...receiveMsg, isSelf: false });
+			});
+
+			// 접속 사용자정보들 push
+			socketIo.on('client.user.in', (context) => {
+				console.log('client.user.in', context);
+
+				const user = JSON.parse(context);
+
+				setUserIn(user);
+			});
+
+			// 사용자가 처음 접속시에 현재 접속한 유저들정보를 가져온다.
+			socketIo.on('client.current.users', (context) => {
+				console.log('client.current.users', context);
+
+				const users = JSON.parse(context);
+
+				users.map((data) => {
+					setUserIn(data);
+				});
+			});
+
+			// 접속끊긴 사용자정보들 pop
+			socketIo.on('client.user.out', (context) => {
+				console.log('client.user.out', context);
+
+				const user = JSON.parse(context);
+
+				setUserOut(user);
 			});
 
 			// 커넥션 에러

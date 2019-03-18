@@ -61,6 +61,50 @@ heroku logs -t
 heroku logs -a socket-client-node -t
 ```
 
+# styled-components
+## 세팅
+- yarn
+  ```
+    yarn add styled-components
+    yarn add babel-plugin-styled-components --dev
+  ```
+
+- .babelrc
+  ```json
+    "plugins": [["styled-components", { "ssr": true }]]
+  ```
+
+# styled-jsx
+## typescript 를 쓰는 환경에서 styled-jsx 를 쓰고자 할 때 아래를 설치
+- yarn
+  ```
+  yarn add @types/styled-jsx
+  ```
+
+## scss 스타일을 쓰고 싶을 때 세팅
+- yarn
+  ```
+  yarn add node-sass styled-jsx-plugin-sass
+  ```
+
+- .babelrc
+  ```json
+    {
+      "presets": [
+        [
+          "next/babel",
+          {
+            "styled-jsx": {
+              "plugins": [
+                "styled-jsx-plugin-sass"
+              ]
+            }
+          }
+        ]
+      ]
+    }
+  ```
+
 ## styled-jsx 를 쓸 때 유의점
 - styled-jsx 를 쓸 때 css 인텔리센스가 나오지 않기 때문에 `styled-jsx Language Server` 익스텐션을 깔고 쓰면 인텔리센스가 뜬다.
 - 다만, 아래와 같이 중괄호가 `<style>` 태그 아래에 있으면 `styled-jsx Language Server` 인텔리센스가 나오지 않고 출력창에 오류가 뜬다

@@ -2,23 +2,27 @@ import _ from 'lodash';
 import { inject, observer } from 'mobx-react';
 import { onAction, onPatch } from 'mobx-state-tree';
 import React, { Component, createRef } from 'react';
-
+import { IStore } from '../stores/store';
 import '../style/ChatMsgBox.scss';
 import ChatPiece from './ChatPiece';
+import UserPicture from './UserPicture';
 
 interface IProps {
-	store?: any;
+	store?: IStore;
 }
 
 class ChatMsgBox extends Component<IProps> {
+	public txtChat: any = createRef<HTMLInputElement>();
 	private chatBox: any = createRef<HTMLDivElement>();
-	private txtChat: any = createRef<HTMLInputElement>();
-	private socketModel: any = this.props.store.socketModel;
+	private socketModel = this.props.store!.socketModel;
 
-	public componentDidMount(): void {
-		// mobx-state-tree patch 이벤트 핸들러
-		onPatch(this.props.store, (patch) => {
-			if (patch.op === 'replace' && patch.path.indexOf('currentNickName') > -1) {
+	public componentDidMount() {
+		// mobx - state - tree patch 이벤트 핸들러
+		onPatch(this.props.store!, (patch) => {
+			if (
+				patch.op === 'replace' &&
+				patch.path.indexOf('currentNickName') > -1
+			) {
 				// 레이어 닫혔을 때 커서가 입력창으로 가게 수정
 				// 레이어에서 그냥 별명치고 엔터 쳤을 때는 메시지 입력 박스로 포커스가 이동이 되었다.
 				// 레이어에서 별명치고 버튼을 클릭했을 때는 레이어 닫힌 후 입력 박스로 포커스가 바로 이동이 되지 않았다.
@@ -45,7 +49,7 @@ class ChatMsgBox extends Component<IProps> {
 		// const { store: { socketModel } } = this.props;
 
 		// socket emit
-		await this.socketModel.setSendMessage(this.txtChat.value);
+		await this.socketModel.setSendMessage();
 
 		// 스크롤 맨 아래로
 		this.fnScrollMove();
@@ -81,8 +85,8 @@ class ChatMsgBox extends Component<IProps> {
 	};
 
 	public render() {
-		const { store: { socketModel } } = this.props;
-		const { messages, currentMessage: { message } } = socketModel;
+		const { socketModel } = this.props.store!;
+		const { messages, currentMessage: { message }, getUsers } = socketModel;
 
 		const chatPieces = messages.map((data, index) => (
 			<ChatPiece
@@ -94,16 +98,31 @@ class ChatMsgBox extends Component<IProps> {
 			/>
 		));
 
+		const users = getUsers.map((data) => {
+			return (
+				<UserPicture
+					nickId={data.nickId}
+					nickName={data.nickName}
+					key={data.uniqueId}
+				/>
+			);
+		});
+
 		return (
 			<div className={'chat-wrap'}>
-				<div ref={this.chatBox} className={'chat-box'}>
-					{chatPieces}
+				<div className={'users-and-chat'}>
+					<div className={'user-wrap'}>{users}</div>
+					<div ref={this.chatBox} className={'chat-box'}>
+						{chatPieces}
+					</div>
 				</div>
-				<div className={'chat-input-box shadow'} onClick={this.handleBoxClick}>
+
+				<div className={'chat-input-box'} onClick={this.handleBoxClick}>
 					<span className={'btn-out-container'} onClick={this.handleSignout}>
 						<i className={'fas fa-sign-out-alt btn-icon'} />
 					</span>
 					<input
+						id='txtChat'
 						onChange={this.handleChange}
 						ref={this.txtChat}
 						onKeyPress={this.handleSendKeyPress}
