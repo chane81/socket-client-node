@@ -122,7 +122,22 @@ heroku logs -a socket-client-node -t
   `}</style>
   ```
 
-## 개발이슈
+# lint 관련
+## tslint 와 prettier 충돌방지를 위한 plugin 설치
+- yarn
+  ```
+    yarn add tslint-config-prettier --dev
+  ```
+- tslint.json 에 "tslint-config-prettier" 추가
+  ```json
+    "extends": [
+      ...
+      "tslint-config-prettier"
+    ],
+  ```
+
+
+# 개발이슈
 - mobx 상태값을 remove 할 때 lodash의 remove(또는 pull) 를 썼는데 오류가 발생하였다.
   - lodash 의 remove 의 경우 replace 가 일어나고 해당 값 delete 가 일어나는 것을 patch 이벤트를 통해 확인이 되었다.
   - 방법은 findIndex 를 하여 idx 를 구한후 splice 를 쓰면 오류를 잡을 수 있었다.
@@ -154,10 +169,10 @@ heroku logs -a socket-client-node -t
     - https://github.com/zeit/next-plugins/issues/91
   
 
-## heroku 클라이언트 URL
+# heroku 클라이언트 URL
 - https://socket-client-node.herokuapp.com/
 
-## Screenshot
+# Screenshot
 - 실행화면
 
   ![](/static/images/screen1.png)

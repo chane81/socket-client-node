@@ -1,6 +1,5 @@
 import classNames from 'classnames/bind';
 import _ from 'lodash';
-import { bool } from 'prop-types';
 import React from 'react';
 import styles from '../styles/UserPicture.scss';
 
@@ -30,8 +29,8 @@ const UserPicture: React.FC<IProps> = (props: IProps) => {
 	return (
 		<div
 			className={cx('user', {
-				trans: isTransparent,
-				'hover-action': isHover
+				'hover-action': isHover,
+				trans: isTransparent
 			})}
 			style={{
 				margin

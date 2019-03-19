@@ -1,10 +1,12 @@
 {
   "extends": [
-    "tslint-config-standard",
     "tslint:latest",
-    "tslint-react"
+    "tslint-react",
+    "tslint-eslint-rules",
+    "tslint-config-prettier"
   ],
   "rules": {
+    "object-literal-key-quotes": [true, "consistent"],
     "jsx-boolean-value": false,
     "semicolon": false,
     "strict-type-predicates": false,
@@ -12,7 +14,7 @@
     "no-consecutive-blank-lines": true,
     "indent": [true, "tabs"],
     "jsx-wrap-multiline": false,
-    "quotemark": [true, "single", "jsx-single"],
+     "quotemark": [true, "single", "jsx-single"],
     "jsx-no-lambda": false,
     "jsx-no-multiline-js": false,
     "max-line-length": false,
@@ -22,7 +24,7 @@
       false,
       "next"
     ],
-    "no-unused-variable": false,
+    "no-unused-variable": [true, {"severity": "warning"}],
     "space-before-function-paren": false,
     "ter-indent": [true, "tab"],
     "typedef-whitespace": [
