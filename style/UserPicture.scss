@@ -13,6 +13,8 @@
 	&:hover {
 		background: white;
 		cursor: pointer;
+		box-shadow: 0px 20px 40px rgba(0, 0, 0, 0.03),
+			0px 20px 40px rgba(0, 0, 0, 0.03);
 	}
 }
 .user-picture {
