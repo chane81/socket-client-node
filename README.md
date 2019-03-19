@@ -124,40 +124,40 @@ heroku logs -a socket-client-node -t
 
 ## 개발이슈
 - mobx 상태값을 remove 할 때 lodash의 remove(또는 pull) 를 썼는데 오류가 발생하였다.
-- lodash 의 remove 의 경우 replace 가 일어나고 해당 값 delete 가 일어나는 것을 patch 이벤트를 통해 확인이 되었다.
-- 방법은 findIndex 를 하여 idx 를 구한후 splice 를 쓰면 오류를 잡을 수 있었다.
-- 참고 URL
-  - https://github.com/vuejs/vue/issues/2673
-- 오류 소스
-  ```js
-    _.remove(self.users, (data) => data.uniqueId === userModel.uniqueId);
-    // 또는
-    _.pullAllBy(self.users, [ { uniqueId: userModel.uniqueId } ], 'uniqueId');	
-  ```
-- 수정된 소스
-  ```js
-    const idx = _.findIndex(self.users, { uniqueId: userModel.uniqueId });
-    self.users.splice(idx, 1);
-  ```
+  - lodash 의 remove 의 경우 replace 가 일어나고 해당 값 delete 가 일어나는 것을 patch 이벤트를 통해 확인이 되었다.
+  - 방법은 findIndex 를 하여 idx 를 구한후 splice 를 쓰면 오류를 잡을 수 있었다.
+  - 참고 URL
+    - https://github.com/vuejs/vue/issues/2673
+  - 오류 소스
+    ```js
+      _.remove(self.users, (data) => data.uniqueId === userModel.uniqueId);
+      // 또는
+      _.pullAllBy(self.users, [ { uniqueId: userModel.uniqueId } ], 'uniqueId');	
+    ```
+  - 수정된 소스
+    ```js
+      const idx = _.findIndex(self.users, { uniqueId: userModel.uniqueId });
+      self.users.splice(idx, 1);
+    ```
+  - 참고
+    ![](/static/images/screen2.png)
 
 - typescript 환경에서 scss 를 사용할 때 scss 를 import 할 경우 모듈을 찾을 수 없다고 에러메시지가 나온다.
   - typings 폴더 생성후 declarations.d.ts 안에 아래 구문 추가
+    ```ts
+      declare module '*.scss' {
+        const content: {[className: string]: string};
+        export = content;
+      }
+    ```
   - 참고 URL
     - https://github.com/zeit/next-plugins/issues/91
-  ```ts
-    declare module '*.scss' {
-    const content: {[className: string]: string};
-    export = content;
-  }
-  ```
-
-- 참고
-![](/static/images/screen2.png)
+  
 
 ## heroku 클라이언트 URL
 - https://socket-client-node.herokuapp.com/
 
 ## Screenshot
-- &nbsp;
+- 실행화면
 
   ![](/static/images/screen1.png)
