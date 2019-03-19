@@ -83,8 +83,11 @@ const model = types
 		},
 		// 사용자가 접속 끊었을 시 데이터 pop
 		setUserOut(userModel) {
+			// 오류발생 코드
 			// _.remove(self.users, (data) => data.uniqueId === userModel.uniqueId);
 			// _.pullAllBy(self.users, [ { uniqueId: userModel.uniqueId } ], 'uniqueId');
+
+			console.log('setUserOut', JSON.stringify(self.users));
 
 			const idx = _.findIndex(self.users, { uniqueId: userModel.uniqueId });
 			self.users.splice(idx, 1);

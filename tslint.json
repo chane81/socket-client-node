@@ -19,7 +19,7 @@
     "no-console": false,
     "no-object-literal-type-assertion": false,
     "no-submodule-imports": [
-      true,
+      false,
       "next"
     ],
     "no-unused-variable": false,
@@ -61,7 +61,9 @@
       "config.js",
       "tsconfig.json",
       "next.config.js",
-      "*.js"
+      "*.js",
+      "*.scss",
+      "*.css"
     ]
   }
 }

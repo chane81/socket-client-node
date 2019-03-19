@@ -1,5 +1,5 @@
 import React, { Component, createRef } from 'react';
-import '../style/ModalWrapper.scss';
+import '../styles/ModalWrapper.scss';
 
 interface IProps {
 	isVisible: boolean;

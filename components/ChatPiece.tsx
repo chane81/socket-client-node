@@ -1,5 +1,6 @@
 import React from 'react';
-import '../style/ChatPiece.scss';
+import '../styles/ChatPiece.scss';
+import UserPicture from './UserPicture';
 
 interface IProps {
 	message: string;
@@ -13,13 +14,14 @@ const ChatPiece: React.FC<IProps> = (props: IProps) => {
 	const msg = props.message.replace(/(?:\r\n|\r|\n)/g, '<br />');
 
 	return (
-		<div className={`chat-msg-wrap ${props.isSelf ? 'chat-right' : 'chat-left'}`}>
+		<div
+			className={`chat-msg-wrap ${props.isSelf ? 'chat-right' : 'chat-left'}`}
+		>
 			<div className={'chat-msg'}>
-				<div
-					className={'chat-picture'}
-					style={{
-						backgroundImage: `url('https://randomuser.me/api/portraits/thumb/men/${props.nickId}.jpg')`
-					}}
+				<UserPicture
+					isShadow={false}
+					nickId={props.nickId}
+					margin={'0.1rem 0.3rem 0.1rem -0.5rem'}
 				/>
 				<div>
 					<span>

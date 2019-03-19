@@ -20,7 +20,8 @@ const ModalWrapperContainer: React.FC<IProps> = ({ store }) => {
 		setCurrentNickId,
 		getModalVisible,
 		setUserIn,
-		setUserOut
+		setUserOut,
+		users
 	} = store!.socketModel;
 
 	const handleNickRegist = (nickName) => {
@@ -81,6 +82,8 @@ const ModalWrapperContainer: React.FC<IProps> = ({ store }) => {
 			socketIo.on('client.user.out', (context) => {
 				const user = JSON.parse(context);
 
+				console.log('client.user.out 1', JSON.stringify(user));
+				console.log('client.user.out 2', JSON.stringify(users));
 				setUserOut(user);
 			});
 

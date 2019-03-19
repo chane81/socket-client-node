@@ -10,7 +10,10 @@
 	font-weight: 600;
 	font-family: 'Quicksand', sans-serif;
 	overflow-y: auto;
-	&:hover {
+	&.trans {
+		background: transparent !important;
+	}
+	&.hover-action:hover {
 		background: white;
 		cursor: pointer;
 		box-shadow: 0px 20px 40px rgba(0, 0, 0, 0.03),
@@ -18,13 +21,11 @@
 	}
 }
 .user-picture {
-	background-size: 2.5rem;
 	background-repeat: no-repeat;
-	width: 2.5rem;
-	height: 2.5rem;
 	border: 1px solid white;
-	margin: 0.2rem;
 	border-radius: 1.5rem;
-	box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.14),
-		0px 10px 10px rgba(0, 0, 0, 0.14);
+	&.user-picture-shadow {
+		box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.14),
+			0px 10px 10px rgba(0, 0, 0, 0.14);
+	}
 }

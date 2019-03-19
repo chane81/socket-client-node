@@ -4,7 +4,7 @@ import { inject, observer } from 'mobx-react';
 import { onAction, onPatch } from 'mobx-state-tree';
 import React, { Component, createRef } from 'react';
 import { IStore } from '../stores/store';
-import '../style/ChatMsgBox.scss';
+import '../styles/ChatMsgBox.scss';
 import ChatPiece from './ChatPiece';
 import UserPicture from './UserPicture';
 
@@ -30,6 +30,12 @@ class ChatMsgBox extends Component<IProps> {
 				// 아래 setTimeout 로 해결함
 				setTimeout(() => this.txtChat.current.focus());
 			}
+
+			console.log('onPatch1', patch);
+			console.log(
+				'onPatch2',
+				JSON.stringify(this.props.store!.socketModel.users)
+			);
 		});
 	}
 
@@ -99,12 +105,16 @@ class ChatMsgBox extends Component<IProps> {
 			/>
 		));
 
-		const userPieces = users.map((data) => {
+		const userPieces = this.props.store!.socketModel.users.map((data) => {
 			return (
 				<UserPicture
 					nickId={data.nickId}
 					nickName={data.nickName}
 					key={data.uniqueId}
+					isShadow={true}
+					sizeRem={'2.5rem'}
+					isTransparent={false}
+					isHover={true}
 				/>
 			);
 		});
