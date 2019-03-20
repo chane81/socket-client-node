@@ -16,7 +16,7 @@
 	.user-wrap {
 		margin: 0.5rem 0 0.5rem 0.5rem;
 		border: 1px solid #e9ecef;
-		border-right: 0px;
+		border-right: none;
 		background: #e9ecef;
 		overflow-y: auto;
 		min-width: 75px;
@@ -25,7 +25,7 @@
 	.chat-box {
 		margin: 0.5rem 0.5rem 0.5rem 0;
 		border: 1px solid #e9ecef;
-		border-left: 0px;
+		border-left: none;
 		background: white;
 		border-radius: 0 5px 5px 0;
 		overflow-y: auto;
@@ -38,7 +38,7 @@
 		line-height: 50px;
 		border: 1px solid #e9ecef;
 		border-radius: 5px;
-		margin: 0 0.5rem 0.5rem 0.5rem;
+		margin: 0 0.5rem 0.5rem;
 
 		&:hover {
 			cursor: pointer;

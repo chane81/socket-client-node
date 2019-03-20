@@ -16,8 +16,8 @@
 	&.hover-action:hover {
 		background: white;
 		cursor: pointer;
-		box-shadow: 0px 20px 40px rgba(0, 0, 0, 0.03),
-			0px 20px 40px rgba(0, 0, 0, 0.03);
+		box-shadow: 0 20px 40px rgba(0, 0, 0, 0.03),
+			0 20px 40px rgba(0, 0, 0, 0.03);
 	}
 }
 .user-picture {
@@ -25,7 +25,7 @@
 	border: 1px solid white;
 	border-radius: 1.5rem;
 	&.user-picture-shadow {
-		box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.14),
-			0px 10px 10px rgba(0, 0, 0, 0.14);
+		box-shadow: 0 10px 10px rgba(0, 0, 0, 0.14),
+			0 10px 10px rgba(0, 0, 0, 0.14);
 	}
 }
