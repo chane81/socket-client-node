@@ -35,7 +35,7 @@
     "bin": true,
     "build": true,
     "lib": true,
-    //"node_modules": true
+    "node_modules": true
   },
 
   // files 설정

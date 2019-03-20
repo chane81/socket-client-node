@@ -1,5 +1,4 @@
 import classNames from 'classnames/bind';
-import _ from 'lodash';
 import React from 'react';
 import styles from '../styles/UserPicture.scss';
 
