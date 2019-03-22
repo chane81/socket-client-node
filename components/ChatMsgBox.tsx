@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import { inject, observer } from 'mobx-react';
-import React, { Component, createRef } from 'react';
+import React, { Component } from 'react';
 import { IMessageModelType, IUsersModelType } from '../stores/storeTypes';
 import '../styles/ChatMsgBox.scss';
 import ChatPiece from './ChatPiece';
