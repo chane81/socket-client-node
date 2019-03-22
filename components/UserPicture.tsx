@@ -27,7 +27,7 @@ const UserPicture: React.FC<IProps> = (props: IProps) => {
 
 	return (
 		<div
-			className={cx('user', {
+			className={cx('root-user-picture', {
 				'hover-action': isHover,
 				trans: isTransparent
 			})}
@@ -36,8 +36,8 @@ const UserPicture: React.FC<IProps> = (props: IProps) => {
 			}}
 		>
 			<div
-				className={cx('user-picture', {
-					'user-picture-shadow': isShadow
+				className={cx('user-img', {
+					'user-img-shadow': isShadow
 				})}
 				style={{
 					backgroundImage: `url('https://randomuser.me/api/portraits/thumb/men/${nickId}.jpg')`,

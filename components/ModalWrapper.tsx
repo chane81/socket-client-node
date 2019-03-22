@@ -1,5 +1,8 @@
+import classNames from 'classnames/bind';
 import React, { Component, createRef } from 'react';
-import '../styles/ModalWrapper.scss';
+import styles from '../styles/ModalWrapper.scss';
+
+const cx = classNames.bind(styles);
 
 interface IProps {
 	isVisible: boolean;
@@ -32,11 +35,18 @@ class ModalWrapper extends Component<IProps> {
 
 	public render() {
 		return (
-			<div className={this.props.isVisible ? 'show' : 'hide'}>
+			<div
+				className={cx('root-modal-wrapper', {
+					hide: !this.props.isVisible
+				})}
+			>
 				<div className='nicknm-gray-background' />
 				<div className='nicknm-wrapper'>
 					<div className='nicknm-modal'>
-						<div className='nicknm-input-container' onClick={this.handleFocus}>
+						<div
+							className='nicknm-input-container'
+							onClick={this.handleFocus}
+						>
 							<input
 								className='nicknm-input'
 								ref={this.txtNickBox}

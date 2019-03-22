@@ -15,7 +15,9 @@ const ChatPiece: React.FC<IProps> = (props: IProps) => {
 
 	return (
 		<div
-			className={`chat-msg-wrap ${props.isSelf ? 'chat-right' : 'chat-left'}`}
+			className={`root-chat-piece ${props.isSelf
+				? 'chat-right'
+				: 'chat-left'}`}
 		>
 			<div className={'chat-msg'}>
 				<UserPicture

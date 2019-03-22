@@ -77,7 +77,7 @@ class ChatMsgBox extends Component<IProps> {
 		const { propMessages, propUsers, propCurrentMessage } = this.props;
 
 		return (
-			<div className={'chat-wrap'}>
+			<div className={'root-chat-msg-box'}>
 				<div className={'users-and-chat'}>
 					<div className={'user-wrap'}>
 						{propUsers.users.map((data) => (

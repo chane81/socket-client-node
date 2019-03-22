@@ -7,7 +7,7 @@
   ],
   "rules": {
     "member-ordering": false,
-    "object-literal-key-quotes": [true, "consistent"],
+    "object-literal-key-quotes": [false, "as-needed"],
     "jsx-boolean-value": false,
     "semicolon": false,
     "strict-type-predicates": false,
@@ -15,7 +15,7 @@
     "no-consecutive-blank-lines": true,
     "indent": [true, "tabs"],
     "jsx-wrap-multiline": false,
-     "quotemark": [true, "single", "jsx-single"],
+     "quotemark": [true, "single", "jsx-single", "avoid-escape"],
     "jsx-no-lambda": false,
     "jsx-no-multiline-js": false,
     "max-line-length": false,
