@@ -1,8 +1,8 @@
 import _ from 'lodash';
 import { flow } from 'mobx';
-import { applySnapshot, types } from 'mobx-state-tree';
+import { applySnapshot, destroy, Instance, types } from 'mobx-state-tree';
 import messageStore, { IMessageModelType } from './messageStore';
-import userStore, { IUserModelType } from './userStore';
+// import userStore, { IUserModelType } from './userStore';
 
 const model = types
 	.model('socketModel', {
@@ -12,8 +12,8 @@ const model = types
 		messages: types.array(messageStore.model),
 		modalVisible: types.boolean,
 		socket: types.frozen(),
-		socketName: types.string,
-		users: types.array(userStore.model)
+		socketName: types.string
+		// users: types.array(userStore.model)
 	})
 	.actions((self) => ({
 		// 접속 소켓을 상태값에 넣어주기
@@ -71,26 +71,13 @@ const model = types
 		},
 		// 현재사용자의 임시ID
 		setCurrentNickId() {
-			return (self.currentNickId = Math.floor(Math.random() * 50).toString());
+			return (self.currentNickId = Math.floor(
+				Math.random() * 50
+			).toString());
 		},
-		// 나가기를 눌렀을 때 쓰는 초기화
+		// 초기화
 		setInit() {
 			applySnapshot(self, defaultValue);
-		},
-		// 새로운 사용자가 접속시 데이터 push
-		setUserIn(userModel: IUserModelType) {
-			self.users.push({ ...userModel });
-		},
-		// 사용자가 접속 끊었을 시 데이터 pop
-		setUserOut(userModel) {
-			// 오류발생 코드
-			// _.remove(self.users, (data) => data.uniqueId === userModel.uniqueId);
-			// _.pullAllBy(self.users, [ { uniqueId: userModel.uniqueId } ], 'uniqueId');
-
-			console.log('setUserOut', JSON.stringify(self.users));
-
-			const idx = _.findIndex(self.users, { uniqueId: userModel.uniqueId });
-			self.users.splice(idx, 1);
 		}
 	}))
 	.views((self) => ({
@@ -125,5 +112,7 @@ const socketStore = {
 	defaultValue,
 	model
 };
+
+export type ISocketModelType = Instance<typeof model>;
 
 export default socketStore;

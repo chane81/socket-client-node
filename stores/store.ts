@@ -6,6 +6,7 @@ import {
 	types
 } from 'mobx-state-tree';
 import socketStore from './socketStore';
+import usersStore from './usersStore';
 
 type IStore = Instance<typeof store>;
 type IStoreSnapshotIn = SnapshotIn<typeof store>;
@@ -13,12 +14,14 @@ type IStoreSnapshotOut = SnapshotOut<typeof store>;
 let initStore: IStore = null as any;
 
 const store = types.model('store', {
-	socketModel: socketStore.model
+	socketModel: socketStore.model,
+	usersModel: usersStore.model
 });
 
 const initializeStore = (isServer, snapshot = null) => {
 	const defaultValue = {
-		socketModel: { ...socketStore.defaultValue }
+		socketModel: { ...socketStore.defaultValue },
+		usersModel: { ...usersStore.defaultValue }
 	};
 
 	// 서버일 경우에 대한 로직 작성

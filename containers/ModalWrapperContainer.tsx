@@ -5,7 +5,7 @@ import io from 'socket.io-client';
 import msgpackParser from 'socket.io-msgpack-parser';
 import ModalWrapper from '../components/ModalWrapper';
 import config from '../config.js';
-import { IStore } from '../stores/store';
+import { IStore } from '../stores/storeTypes';
 
 interface IProps {
 	store?: IStore;
@@ -18,11 +18,10 @@ const ModalWrapperContainer: React.FC<IProps> = ({ store }) => {
 		setSocket,
 		setCurrentNickName,
 		setCurrentNickId,
-		getModalVisible,
-		setUserIn,
-		setUserOut,
-		users
+		getModalVisible
 	} = store!.socketModel;
+
+	const { setUserIn, setUserOut, users } = store!.usersModel;
 
 	const handleNickRegist = (nickName) => {
 		// 닉네임을 상태에 등록
@@ -71,9 +70,9 @@ const ModalWrapperContainer: React.FC<IProps> = ({ store }) => {
 			socketIo.on('client.current.users', (context) => {
 				console.log('client.current.users', context);
 
-				const users = JSON.parse(context);
+				const reqUsersData = JSON.parse(context);
 
-				users.map((data) => {
+				reqUsersData.map((data) => {
 					setUserIn(data);
 				});
 			});
@@ -82,8 +81,6 @@ const ModalWrapperContainer: React.FC<IProps> = ({ store }) => {
 			socketIo.on('client.user.out', (context) => {
 				const user = JSON.parse(context);
 
-				console.log('client.user.out 1', JSON.stringify(user));
-				console.log('client.user.out 2', JSON.stringify(users));
 				setUserOut(user);
 			});
 

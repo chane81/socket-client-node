@@ -1,143 +1,119 @@
-import { JsonWebTokenError } from 'jsonwebtoken';
 import _ from 'lodash';
 import { inject, observer } from 'mobx-react';
-import { onAction, onPatch } from 'mobx-state-tree';
 import React, { Component, createRef } from 'react';
-import { IStore } from '../stores/store';
+import { IMessageModelType, IUsersModelType } from '../stores/storeTypes';
 import '../styles/ChatMsgBox.scss';
 import ChatPiece from './ChatPiece';
 import UserPicture from './UserPicture';
 
 interface IProps {
-	store?: IStore;
+	propHandleChange: (currentMessage: string) => void;
+	propHandleSend: () => void;
+	propHandleSignout: () => void;
+	propMessages: IMessageModelType[];
+	propUsers: IUsersModelType;
+	propCurrentMessage: string;
+}
+
+interface IChatMsgBox {
+	handleBoxClick: () => void;
 }
 
 class ChatMsgBox extends Component<IProps> {
-	public txtChat: any = createRef<HTMLInputElement>();
-	private chatBox: any = createRef<HTMLDivElement>();
-	private socketModel = this.props.store!.socketModel;
-
-	public componentDidMount() {
-		// mobx - state - tree patch 이벤트 핸들러
-		onPatch(this.props.store!, (patch) => {
-			if (
-				patch.op === 'replace' &&
-				patch.path.indexOf('currentNickName') > -1
-			) {
-				// 레이어 닫혔을 때 커서가 입력창으로 가게 수정
-				// 레이어에서 그냥 별명치고 엔터 쳤을 때는 메시지 입력 박스로 포커스가 이동이 되었다.
-				// 레이어에서 별명치고 버튼을 클릭했을 때는 레이어 닫힌 후 입력 박스로 포커스가 바로 이동이 되지 않았다.
-				// 아래 setTimeout 로 해결함
-				setTimeout(() => this.txtChat.current.focus());
-			}
-
-			console.log('onPatch1', patch);
-			console.log(
-				'onPatch2',
-				JSON.stringify(this.props.store!.socketModel.users)
-			);
-		});
-	}
+	// ref 객체
+	public txtChat: HTMLInputElement;
+	private chatBox: HTMLDivElement;
 
 	// 컴포넌트 update 시 스크롤 맨 아래로 이동
 	public componentDidUpdate(prevProps, prevStates) {
 		this.fnScrollMove();
 	}
 
+	// 챗박스 감싸고 있는 부분 클릭시 인풋박스 포커스이동되게 함
+	public handleBoxClick = () => {
+		this.txtChat.focus();
+	};
+
 	// 스크롤 맨 아래로
-	public fnScrollMove() {
-		const { scrollHeight, clientHeight } = this.chatBox.current;
-		this.chatBox.current.scrollTop = scrollHeight - clientHeight;
+	private fnScrollMove() {
+		const { scrollHeight, clientHeight } = this.chatBox;
+		this.chatBox.scrollTop = scrollHeight - clientHeight;
 	}
 
 	// 소켓 전송
 	// setSendMessage 가 비동기 이므로 async await 를 써서 스크롤 맨아래로내리는 부분 제대로 수행되게 함
-	public handleSend = async () => {
-		// const { store: { socketModel } } = this.props;
-
-		// socket emit
-		await this.socketModel.setSendMessage();
+	private handleSend = async () => {
+		await this.props.propHandleSend();
 
 		// 스크롤 맨 아래로
 		this.fnScrollMove();
 	};
 
 	// 입력창에서 엔터키 눌렀을 때
-	public handleSendKeyPress = async (e) => {
+	private handleSendKeyPress = async (e) => {
 		if (e.key === 'Enter') {
 			await this.handleSend();
 		}
 	};
 
 	// 전송할 텍스트 입력
-	public handleChange = (e) => {
-		// const { store: { socketModel } } = this.props;
-
-		this.socketModel.setCurrentMessage(e.target.value);
+	private handleChange = (e) => {
+		this.props.propHandleChange(e.target.value);
 	};
 
-	// 챗박스 감싸고 있는 부분 클릭시 인풋박스 포커스이동되게 함
-	public handleBoxClick = () => {
-		this.txtChat.current.focus();
-	};
-
-	public handleSignout = () => {
-		// const { store: { socketModel } } = this.props;
-
-		// 소캣닫기
-		this.socketModel.setSocketClose();
-
-		// 소캣 스토어 초기화
-		this.socketModel.setInit();
+	// 나가기 클릭
+	private handleSignout = () => {
+		this.props.propHandleSignout();
 	};
 
 	public render() {
-		const { socketModel } = this.props.store!;
-		const { messages, currentMessage: { message }, users } = socketModel;
-
-		const chatPieces = messages.map((data, index) => (
-			<ChatPiece
-				isSelf={data.isSelf}
-				message={data.message}
-				nickName={data.nickName}
-				nickId={data.nickId}
-				key={index}
-			/>
-		));
-
-		const userPieces = this.props.store!.socketModel.users.map((data) => {
-			return (
-				<UserPicture
-					nickId={data.nickId}
-					nickName={data.nickName}
-					key={data.uniqueId}
-					isShadow={true}
-					sizeRem={'2.5rem'}
-					isTransparent={false}
-					isHover={true}
-				/>
-			);
-		});
+		const { propMessages, propUsers, propCurrentMessage } = this.props;
 
 		return (
 			<div className={'chat-wrap'}>
 				<div className={'users-and-chat'}>
-					<div className={'user-wrap'}>{userPieces}</div>
-					<div ref={this.chatBox} className={'chat-box'}>
-						{chatPieces}
+					<div className={'user-wrap'}>
+						{propUsers.users.map((data) => (
+							<UserPicture
+								nickId={data.nickId}
+								nickName={data.nickName}
+								key={data.uniqueId}
+								isShadow={true}
+								sizeRem={'2.5rem'}
+								isTransparent={false}
+								isHover={true}
+							/>
+						))}
+					</div>
+					<div
+						ref={(ref: HTMLDivElement) => (this.chatBox = ref)}
+						className={'chat-box'}
+					>
+						{propMessages.map((data, index) => (
+							<ChatPiece
+								isSelf={data.isSelf}
+								message={data.message}
+								nickName={data.nickName}
+								nickId={data.nickId}
+								key={index}
+							/>
+						))}
 					</div>
 				</div>
 
 				<div className={'chat-input-box'} onClick={this.handleBoxClick}>
-					<span className={'btn-out-container'} onClick={this.handleSignout}>
+					<span
+						className={'btn-out-container'}
+						onClick={this.handleSignout}
+					>
 						<i className={'fas fa-sign-out-alt btn-icon'} />
 					</span>
 					<input
 						id='txtChat'
 						onChange={this.handleChange}
-						ref={this.txtChat}
+						ref={(ref: HTMLInputElement) => (this.txtChat = ref)}
 						onKeyPress={this.handleSendKeyPress}
-						value={message}
+						value={propCurrentMessage}
 						type='text'
 						placeholder='메시지를 입력해 주세요!'
 					/>
@@ -150,4 +126,7 @@ class ChatMsgBox extends Component<IProps> {
 	}
 }
 
+// export default ChatMsgBox;
+// inject 로 감싸여진 컴포넌트의 ref 호출 실험을 위해서 아래 구문으로 함
+export { IChatMsgBox };
 export default inject(({ store }) => ({ store }))(observer(ChatMsgBox));
