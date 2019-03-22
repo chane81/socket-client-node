@@ -16,9 +16,14 @@ interface IProps {
 }
 
 // 해당 컴포넌트기능 외부 노출용 인터페이스
-interface IChatMsgBox {
+interface IChatMsgBoxObj {
 	handleBoxClick: () => void;
 	txtChat: HTMLInputElement;
+}
+
+// mobx inject 로 감싸져 export 가 되었으므로 wrappedInstance 로 노출해야함
+interface IChatMsgBox {
+	wrappedInstance: IChatMsgBoxObj;
 }
 
 class ChatMsgBox extends Component<IProps> {

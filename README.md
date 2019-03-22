@@ -186,22 +186,55 @@ heroku logs -a socket-client-node -t
       <ChatMsgBox ref={(ref) => (this.chatMsgBox = ref)}/>
     ```
   - `해결방법`
-    - 아래와 같이 `wrappedInstance` 를 호출한 다음 내가 호출할 함수를 호출하면 잘 된다.
-    ```js
-      public handleClick = () => {
-		    this.chatMsgBox.wrappedInstance.handleBoxClick();
-	    };
+    - 방법1
+      - 아래와 같이 `wrappedInstance` 를 호출한 다음 내가 호출할 함수를 호출하면 잘 된다.
+      - 다만 typescript 적용을 하지 않았으므로 handleBoxClick() 의 인텔리센스가 나오지 않음
+      ```js
+        // 선언
+        private chatMsgBox;
 
-      <ChatMsgBox ref={(ref) => (this.chatMsgBox = ref)}/>
-    ```
-    - 또는
-    ```js
-      public handleClick = () => {
-		    this.chatMsgBox.handleBoxClick();
-	    };
+        // 호출
+        public handleClick = () => {
+          this.chatMsgBox.wrappedInstance.handleBoxClick();
+        };
 
-      <ChatMsgBox ref={(ref: any) => (this.chatMsgBox = ref.wrappedInstance)}/>
-    ```
+        // jsx
+        <ChatMsgBox ref={(ref) => (this.chatMsgBox = ref)}/>
+      ```
+    - 방법2: 인텔리센스가 나오게 하기
+      - 아래와 같이 하면 `handleBoxClick()` 함수에 대한 인텔리센스가 나온다.
+      - 자식 컴포넌트 부분 로직
+        ```js
+          // 외부에 노출할 함수나 엘리먼트들
+          interface IChatMsgBoxObj {
+            handleBoxClick: () => void;
+            txtChat: HTMLInputElement;
+          }
+
+          // mobx inject 로 감싸져 export 가 되었으므로 wrappedInstance 로 노출해야함
+          interface IChatMsgBox {
+            wrappedInstance: IChatMsgBoxObj;
+          }
+
+          export { IChatMsgBox };
+        ```
+      - 부모 컴포넌트 부분 로직
+        ```js
+          // 인터페이스 가져오기
+          import ChatMsgBox, { IChatMsgBox } from '../components/ChatMsgBox';
+
+          // 선언
+          private chatMsgBox: IChatMsgBox;
+
+          // 호출
+          this.chatMsgBox.wrappedInstance.handleBoxClick();
+
+          // jsx
+          <ChatMsgBox
+					  ref={(ref: any) => (this.chatMsgBox = ref)}
+				  />
+        ```
+
 
 
 # heroku 클라이언트 URL

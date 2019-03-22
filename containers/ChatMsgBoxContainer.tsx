@@ -9,6 +9,7 @@ interface IProps {
 }
 
 class ChatMsgBoxContainer extends Component<IProps> {
+	// ChatMsgBox 의 ref 객체
 	// private chatMsgBox = createRef();
 	private chatMsgBox: IChatMsgBox;
 
@@ -32,10 +33,11 @@ class ChatMsgBoxContainer extends Component<IProps> {
 				console.log('mst onPatch:', patch);
 
 				// 닉네임 입력 모달창 닫았을 때 input 입력박스로 focus 이동
+				// 컴포넌트가 mobx inject로 감싸진 경우에 wrappedInstance 로 써야함
 				setTimeout(() => {
-					// (this.chatMsgBox.wrappedInstance as IChatMsgBox).handleBoxClick();
-					// this.chatMsgBox.txtChat.focus();
-					this.chatMsgBox.handleBoxClick();
+					// (this.chatMsgBox
+					// 	.wrappedInstance as IChatMsgBox).handleBoxClick();
+					this.chatMsgBox.wrappedInstance.handleBoxClick();
 				});
 			}
 		});
@@ -64,9 +66,7 @@ class ChatMsgBoxContainer extends Component<IProps> {
 					propHandleSignout={this.handleSignout}
 					propMessages={socketModel.messages}
 					propUsers={usersModel}
-					/* 아래 wrappedInstance 중요함 */
-					/* 컴포넌트가 mobx inject로 감싸진 경우에 wrappedInstance 로 써야함 */
-					ref={(ref: any) => (this.chatMsgBox = ref.wrappedInstance)}
+					ref={(ref: any) => (this.chatMsgBox = ref)}
 				/>
 			</div>
 		);

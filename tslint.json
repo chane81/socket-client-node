@@ -54,8 +54,10 @@
       "check-preblock",
       "check-rest-spread",
       "check-separator",
+      "check-type",
       "check-typecast",
-      "check-type-operator"
+      "check-type-operator",
+      "check-preblock"
     ]
   },
   "linterOptions": {
