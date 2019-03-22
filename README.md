@@ -168,11 +168,11 @@ heroku logs -a socket-client-node -t
   - 참고 URL
     - https://github.com/zeit/next-plugins/issues/91
   
-- MOBX 를 쓰는 환경의 컴포넌트 ref 를 가져올 때 이슈
+- mobx 를 쓰는 환경의 컴포넌트 ref 를 가져올 때 이슈
   - 부모컴포넌트가 자식컴포넌트의 ref를 가져오려고 할 때 해당 객체를 가져오지 못하는 이슈가 있었다.
   - `만약 inject로 감싸여진 환경이 아니라면 ref 는 잘 가져온다.`
   - `만약 자식 컴포넌트의 ref를 가져오는게 아닌 컴포넌트 내부의 엘리먼트 ref를 가져오는 것 이라면 문제 없다.`
-  - 자식 컴포넌트가 `MOBX STORE`를 사용하는 환경이라면 아래와 같이 `inject` 로 감싸여져서 export 를 할 것이다.
+  - 자식 컴포넌트가 `mobx store`를 사용하는 환경이라면 아래와 같이 `inject` 로 감싸여져서 export 를 할 것이다.
     ```js
       export default inject(({ store }) => ({ store }))(observer(ChatMsgBox));
     ```
