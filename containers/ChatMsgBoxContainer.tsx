@@ -34,6 +34,7 @@ class ChatMsgBoxContainer extends Component<IProps> {
 				// 닉네임 입력 모달창 닫았을 때 input 입력박스로 focus 이동
 				setTimeout(() => {
 					// (this.chatMsgBox.wrappedInstance as IChatMsgBox).handleBoxClick();
+					// this.chatMsgBox.txtChat.focus();
 					this.chatMsgBox.handleBoxClick();
 				});
 			}

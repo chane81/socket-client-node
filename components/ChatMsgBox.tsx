@@ -15,8 +15,10 @@ interface IProps {
 	propCurrentMessage: string;
 }
 
+// 해당 컴포넌트기능 외부 노출용 인터페이스
 interface IChatMsgBox {
 	handleBoxClick: () => void;
+	txtChat: HTMLInputElement;
 }
 
 class ChatMsgBox extends Component<IProps> {
