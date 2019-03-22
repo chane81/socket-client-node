@@ -80,6 +80,15 @@ class ChatMsgBox extends Component<IProps> {
 			<div className={'root-chat-msg-box'}>
 				<div className={'users-and-chat'}>
 					<div className={'user-wrap'}>
+						<div
+							style={{
+								display: 'flex',
+								flexFlow: 'column'
+							}}
+						>
+							<i className='fas fa-users' />
+							<div>전체</div>
+						</div>
 						{propUsers.users.map((data) => (
 							<UserPicture
 								nickId={data.nickId}

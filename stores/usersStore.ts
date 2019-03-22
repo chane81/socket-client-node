@@ -44,7 +44,13 @@ const model = types
 	}));
 
 const defaultValue = {
-	users: []
+	users: [
+		{
+			nickId: 'all',
+			nickName: '전체',
+			uniqueId: '0'
+		}
+	]
 };
 
 const create = model.create(defaultValue);
