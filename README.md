@@ -194,6 +194,14 @@ heroku logs -a socket-client-node -t
 
       <ChatMsgBox ref={(ref) => (this.chatMsgBox = ref)}/>
     ```
+    - 또는
+    ```js
+      public handleClick = () => {
+		    this.chatMsgBox.handleBoxClick();
+	    };
+
+      <ChatMsgBox ref={(ref: any) => (this.chatMsgBox = ref.wrappedInstance)}/>
+    ```
 
 
 # heroku 클라이언트 URL
