@@ -177,7 +177,7 @@ heroku logs -a socket-client-node -t
       export default inject(({ store }) => ({ store }))(observer(ChatMsgBox));
     ```
   - 기본적으로 자식컴포넌트 ref 를 가져와 함수 호출하는 방식은 아래와 같다.
-  - 하지만 ChatMsgBox 가 MOBX inject 로 감싸여져 있다면 handleBoxClick() 는 아래와 같이 호출하여서는 에러가 난다.
+  - 하지만 ChatMsgBox 가 mobx inject 로 감싸여져 있다면 handleBoxClick() 는 아래와 같이 호출하여서는 에러가 난다.
     ```js
       public handleClick = () => {
 		    this.chatMsgBox.handleBoxClick();
