@@ -2,7 +2,7 @@ import { inject, observer } from 'mobx-react';
 import { onAction, onPatch } from 'mobx-state-tree';
 import React, { Component } from 'react';
 import ChatMsgBox, { IChatMsgBox } from '../components/ChatMsgBox';
-import { IStore } from '../stores/storeTypes';
+import { IStore, IUserModelType } from '../stores/storeTypes';
 
 interface IProps {
 	store?: IStore;
@@ -54,6 +54,11 @@ class ChatMsgBoxContainer extends Component<IProps> {
 		usersModel.setInit();
 	};
 
+	public handleUserClick = (userModel: IUserModelType) => {
+		const { usersModel } = this.props.store!;
+		usersModel.setUserActive(userModel);
+	};
+
 	public render() {
 		const { socketModel, usersModel } = this.props.store!;
 
@@ -66,6 +71,7 @@ class ChatMsgBoxContainer extends Component<IProps> {
 					propHandleSignout={this.handleSignout}
 					propMessages={socketModel.messages}
 					propUsers={usersModel}
+					propHandleUserClick={this.handleUserClick}
 					ref={(ref: any) => (this.chatMsgBox = ref)}
 				/>
 			</div>

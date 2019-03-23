@@ -1,7 +1,11 @@
 import _ from 'lodash';
 import { inject, observer } from 'mobx-react';
 import React, { Component } from 'react';
-import { IMessageModelType, IUsersModelType } from '../stores/storeTypes';
+import {
+	IMessageModelType,
+	IUserModelType,
+	IUsersModelType
+} from '../stores/storeTypes';
 import '../styles/ChatMsgBox.scss';
 import ChatPiece from './ChatPiece';
 import UserPicture from './UserPicture';
@@ -10,6 +14,7 @@ interface IProps {
 	propHandleChange: (currentMessage: string) => void;
 	propHandleSend: () => void;
 	propHandleSignout: () => void;
+	propHandleUserClick: (userModel: IUserModelType) => void;
 	propMessages: IMessageModelType[];
 	propUsers: IUsersModelType;
 	propCurrentMessage: string;
@@ -74,7 +79,12 @@ class ChatMsgBox extends Component<IProps> {
 	};
 
 	public render() {
-		const { propMessages, propUsers, propCurrentMessage } = this.props;
+		const {
+			propMessages,
+			propUsers,
+			propCurrentMessage,
+			propHandleUserClick
+		} = this.props;
 
 		return (
 			<div className={'root-chat-msg-box'}>
@@ -91,13 +101,13 @@ class ChatMsgBox extends Component<IProps> {
 						</div>
 						{propUsers.users.map((data) => (
 							<UserPicture
-								nickId={data.nickId}
-								nickName={data.nickName}
+								userModel={data}
 								key={data.uniqueId}
 								isShadow={true}
 								sizeRem={'2.5rem'}
 								isTransparent={false}
 								isHover={true}
+								handleClick={propHandleUserClick}
 							/>
 						))}
 					</div>

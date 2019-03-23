@@ -19,6 +19,9 @@
 		box-shadow: 0 20px 40px rgba(0, 0, 0, 0.03),
 			0 20px 40px rgba(0, 0, 0, 0.03);
 	}
+	&.bg-white {
+		background: white;
+	}
 	.user-img {
 		background-repeat: no-repeat;
 		border: 1px solid white;
@@ -27,5 +30,8 @@
 			box-shadow: 0 10px 10px rgba(0, 0, 0, 0.14),
 				0 10px 10px rgba(0, 0, 0, 0.14);
 		}
+		display: flex;
+		flex-flow: column;
+		justify-content: center;
 	}
 }

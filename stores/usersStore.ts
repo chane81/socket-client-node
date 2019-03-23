@@ -2,22 +2,17 @@ import _ from 'lodash';
 import { applySnapshot, Instance, types } from 'mobx-state-tree';
 
 // 유저 모델
-// const userModel = types.model('userModel', {
-// 	nickId: types.string,
-// 	nickName: types.string,
-// 	uniqueId: types.string
-// });
+const userModel = types.model('userModel', {
+	isActive: types.boolean,
+	nickId: types.string,
+	nickName: types.string,
+	uniqueId: types.string
+});
 
 // 유저 컬렉션 모델
-const model = types
+const usersModel = types
 	.model('usersModel', {
-		users: types.array(
-			types.model({
-				nickId: types.string,
-				nickName: types.string,
-				uniqueId: types.string
-			})
-		)
+		users: types.array(userModel)
 	})
 	.actions((self) => ({
 		// 새로운 사용자가 접속시 데이터 push
@@ -37,6 +32,11 @@ const model = types
 			});
 			self.users.splice(idx, 1);
 		},
+		setUserActive(user) {
+			self.users.map(
+				(data) => (data.isActive = data.uniqueId === user.uniqueId)
+			);
+		},
 		// 초기화
 		setInit() {
 			applySnapshot(self, defaultValue);
@@ -46,6 +46,7 @@ const model = types
 const defaultValue = {
 	users: [
 		{
+			isActive: true,
 			nickId: 'all',
 			nickName: '전체',
 			uniqueId: '0'
@@ -53,14 +54,15 @@ const defaultValue = {
 	]
 };
 
-const create = model.create(defaultValue);
+const create = usersModel.create(defaultValue);
 
 const usersStore = {
 	create,
 	defaultValue,
-	model
+	model: usersModel
 };
 
-export type IUsersModelType = Instance<typeof model>;
+export type IUserModelType = Instance<typeof userModel>;
+export type IUsersModelType = Instance<typeof usersModel>;
 
 export default usersStore;
