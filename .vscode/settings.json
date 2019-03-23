@@ -62,4 +62,5 @@
   "sync.gist": "22d8153e6726882b514d8cab04b44d44",
   "markdown-pdf.highlightStyle": "github.css",
   "javascript.updateImportsOnFileMove.enabled": "always",
+  "diffEditor.ignoreTrimWhitespace": true,
 }
