@@ -23,7 +23,6 @@ app.use(bodyParser());
 
 nextApp.prepare().then(() => {
 
-
   router.get('*', async (ctx, next) => {
     return await nextHandler(ctx.req, ctx.res);
   })

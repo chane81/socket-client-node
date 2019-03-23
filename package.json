@@ -3,7 +3,7 @@
 	"scripts": {
 		"dev": "next",
 		"build": "next build && next export",
-		"start": "next start -p $PORT",
+		"start": "node server.js",
 		"tslint": "tslint -c tslint.json -p tsconfig.json",
 		"heroku-postbuild": "next build"
 	},
