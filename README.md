@@ -53,16 +53,27 @@ heroku login -i
 - heroku ps:scale web=1
 
 ## 배포
-```
-heroku login
-heroku remote -v
-heroku git:remote -a socket-client-node
-git add .
-git commit -m "수정내역"
-git push -f heroku master
-heroku logs -t
-heroku logs -a socket-client-node -t
-```
+- package.json
+  - start 시에 `server.js 를 쓰지 않을 경우` 아래와 같이 하고 heroku 에 배포
+    ```json
+      "start": "next start -p $PORT"
+    ```
+  - start 시에 `server.js 를 node 로 쓸 경우` 아래와 같이 하고 heroku 에 배포
+    ```json
+      "start": "node server.js"
+    ```
+
+- heroku
+  ```
+  heroku login
+  heroku remote -v
+  heroku git:remote -a socket-client-node
+  git add .
+  git commit -m "수정내역"
+  git push -f heroku master
+  heroku logs -t
+  heroku logs -a socket-client-node -t
+  ```
 
 # styled-components
 ## 세팅
