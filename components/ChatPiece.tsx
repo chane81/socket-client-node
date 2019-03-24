@@ -21,6 +21,7 @@ const ChatPiece: React.FC<IProps> = (props: IProps) => {
 					userModel={user}
 					margin={'0.1rem 0.3rem 0.1rem -0.5rem'}
 					isShadow={false}
+					isRead={true}
 				/>
 				<div>
 					<span>
