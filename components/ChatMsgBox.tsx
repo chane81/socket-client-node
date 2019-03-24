@@ -17,6 +17,7 @@ interface IProps {
 	propMessages: IMessageModelType[];
 	propUsers: IUserCollectionModelType;
 	propCurrentMessage: string;
+	propUniqueId: string;
 }
 
 // 해당 컴포넌트기능 외부 노출용 인터페이스
@@ -82,7 +83,8 @@ class ChatMsgBox extends Component<IProps> {
 			propMessages,
 			propUsers,
 			propCurrentMessage,
-			propHandleUserClick
+			propHandleUserClick,
+			propUniqueId
 		} = this.props;
 
 		// console.log('ChatMsgBox', JSON.stringify(propUsers.users));
@@ -101,6 +103,7 @@ class ChatMsgBox extends Component<IProps> {
 								isHover={true}
 								propHandleUserClick={propHandleUserClick}
 								isShowNickName={true}
+								activeUniqueId={propUniqueId}
 							/>
 						))}
 					</div>

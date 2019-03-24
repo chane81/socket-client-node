@@ -6,6 +6,7 @@ import styles from '../styles/UserPicture.scss';
 const cx = classNames.bind(styles);
 
 interface IProps {
+	activeUniqueId?: string;
 	userModel: IUserModelType;
 	isShadow?: boolean;
 	margin?: string;
@@ -19,6 +20,7 @@ interface IProps {
 
 const UserPicture: React.FC<IProps> = (props: IProps) => {
 	const {
+		activeUniqueId = '',
 		userModel,
 		isShadow = true,
 		isTransparent = true,
@@ -30,16 +32,18 @@ const UserPicture: React.FC<IProps> = (props: IProps) => {
 	} = props;
 
 	const backgroundImage =
-		(userModel.nickId !== 'all' &&
+		(userModel.uniqueId !== '' &&
 			`url('https://randomuser.me/api/portraits/thumb/men/${userModel.nickId}.jpg')`) ||
 		'';
+
+	const isActive = userModel.uniqueId === activeUniqueId;
 
 	return (
 		userModel && (
 			<div
 				onClick={() => propHandleUserClick!(userModel.uniqueId)}
 				className={cx('root-user-picture', {
-					'bg-white': userModel.isActive,
+					'bg-white': isActive,
 					'hover-action': isHover,
 					trans: isTransparent
 				})}
@@ -58,7 +62,7 @@ const UserPicture: React.FC<IProps> = (props: IProps) => {
 						width: sizeRem
 					}}
 				>
-					{userModel.nickId === 'all' && <i className='fas fa-users fa-2x' />}
+					{userModel.uniqueId === '' && <i className='fas fa-users fa-2x' />}
 				</div>
 				{isShowNickName && (
 					<div className={'user-nick'}>{userModel.nickName}</div>

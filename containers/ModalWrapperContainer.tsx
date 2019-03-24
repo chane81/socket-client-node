@@ -1,4 +1,3 @@
-import { JsonWebTokenError } from 'jsonwebtoken';
 import { inject, observer } from 'mobx-react';
 import React from 'react';
 import io from 'socket.io-client';

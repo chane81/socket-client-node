@@ -12,7 +12,10 @@ const model = types
 		currentUser: userStore.model,
 
 		/** 접속사용자들 정보 컬렉션 */
-		users: types.array(userStore.model)
+		users: types.array(userStore.model),
+
+		/** 1:1 채팅할 유저 uniqueId */
+		activeUniqueId: types.string
 	})
 	.actions((self) => ({
 		/** 현재 접속한 유저정보 set  */
@@ -21,10 +24,14 @@ const model = types
 			self.currentUser.nickName = currentNickName;
 
 			// 1:1 사용자 활성화여부 false
-			self.currentUser.isActive = false;
+			// self.currentUser.isActive = false;
 
 			// 닉ID set
 			self.currentUser.nickId = Math.floor(Math.random() * 50).toString();
+		},
+		/** 1:1 채팅할 상대 uniqueId set */
+		setActiveUniqueId(uniqueId: string) {
+			self.activeUniqueId = uniqueId;
 		},
 		/** 유니크ID set */
 		setCurrentUniqueId(currentUniqueId) {
@@ -42,18 +49,15 @@ const model = types
 
 			console.log('setUserOut', JSON.stringify(self.users));
 
+			// 만약 나가는 사용자가 현재 1:1 채팅중인 사용자라면 '전체' 로 채팅방을 바꾼다.
+			self.activeUniqueId =
+				self.activeUniqueId === user.uniqueId ? '' : self.activeUniqueId;
+
 			const idx = _.findIndex(self.users, {
 				uniqueId: user.uniqueId
 			});
 
 			self.users.splice(idx, 1);
-		},
-		/** 해당 사용자 클릭시 1:1채팅 활성화, UserPicture 컴포넌트 배경 변경 */
-		setUserActive(uniqueId: string) {
-			self.users.map((data: IUserModelType) => {
-				const isActive = data.uniqueId === uniqueId;
-				data.setActive(isActive);
-			});
 		},
 		/** 초기화 */
 		setInit() {
@@ -62,13 +66,14 @@ const model = types
 	}));
 
 const defaultValue = {
+	activeUniqueId: '',
 	currentUser: userStore.defaultValue,
 	users: [
 		{
-			isActive: true,
+			// isActive: true,
 			nickId: 'all',
 			nickName: '전체',
-			uniqueId: '0'
+			uniqueId: ''
 		}
 	]
 };

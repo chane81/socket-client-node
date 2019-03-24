@@ -9,6 +9,9 @@ const model = types
 		/** 스토어 아이덴티티 */
 		identifier: types.optional(types.identifier, 'socketModel'),
 
+		/** 1:1 채팅할 유저 uniqueId */
+		// activeUniqueId: types.string,
+
 		/** 현재 접속한 유저가 보낼려는 메시지 */
 		currentMessage: types.optional(
 			messageStore.model,
@@ -35,6 +38,10 @@ const model = types
 		setSocket(socket) {
 			self.socket = socket;
 		},
+		// /** 1:1 채팅할 상대 uniqueId set */
+		// setActiveUniqueId(uniqueId: string) {
+		// 	self.activeUniqueId = uniqueId;
+		// },
 		/** 주고 받은 메시지들 push */
 		setMessagesPush(messageModel: IMessageModelType) {
 			self.messages.push({ ...messageModel });
@@ -85,6 +92,7 @@ const model = types
 	}));
 
 const defaultValue = {
+	// activeUniqueId: '',
 	currentMessage: {
 		...messageStore.defaultValue
 	},

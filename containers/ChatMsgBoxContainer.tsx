@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import { inject, observer } from 'mobx-react';
 import { onAction, onPatch } from 'mobx-state-tree';
 import React, { Component } from 'react';
@@ -54,10 +55,10 @@ class ChatMsgBoxContainer extends Component<IProps> {
 		userCollectionModel.setInit();
 	};
 
+	// 좌측 사용자 이미지 클릭시 1:1 채팅 활성화
 	public handleUserClick = (uniqueId: string) => {
 		const { userCollectionModel } = this.props.store!;
-		userCollectionModel.setUserActive(uniqueId);
-		// this.forceUpdate();
+		userCollectionModel.setActiveUniqueId(uniqueId);
 	};
 
 	// 현재 사용자가 메시지 입력시 상태값에 메시지 저장
@@ -67,6 +68,8 @@ class ChatMsgBoxContainer extends Component<IProps> {
 		const msg: IMessageModelType = {
 			isSelf: true,
 			message: currentMessage,
+			msgFromUniqueId: userCollectionModel.currentUser.uniqueId,
+			msgToUniqueId: userCollectionModel.activeUniqueId,
 			user: { ...userCollectionModel.currentUser }
 		};
 
@@ -75,6 +78,26 @@ class ChatMsgBoxContainer extends Component<IProps> {
 
 	public render() {
 		const { socketModel, userCollectionModel } = this.props.store!;
+		const messages = _.filter(
+			socketModel.messages,
+			(data: IMessageModelType) => {
+				const to = data.msgToUniqueId;
+				const from = data.msgFromUniqueId;
+				const curId = userCollectionModel.currentUser.uniqueId;
+				const activeId = userCollectionModel.activeUniqueId;
+
+				if (activeId === '') {
+					// 전체 메시지
+					return to === '';
+				} else {
+					// 개별 메시지
+					return (
+						(from === activeId && to === curId) ||
+						(from === curId && to === activeId)
+					);
+				}
+			}
+		);
 
 		return (
 			<div>
@@ -83,10 +106,11 @@ class ChatMsgBoxContainer extends Component<IProps> {
 					propHandleUserClick={this.handleUserClick}
 					propHandleChange={this.handleSetCurrentMessage}
 					propHandleSignout={this.handleSignout}
-					propMessages={socketModel.messages}
+					propMessages={messages}
 					propUsers={userCollectionModel}
 					propCurrentMessage={socketModel.currentMessage.message}
 					propHandleSend={socketModel.setSendMessage}
+					propUniqueId={userCollectionModel.activeUniqueId}
 				/>
 			</div>
 		);
