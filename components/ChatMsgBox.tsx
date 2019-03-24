@@ -3,8 +3,7 @@ import { inject, observer } from 'mobx-react';
 import React, { Component } from 'react';
 import {
 	IMessageModelType,
-	IUserCollectionModelType,
-	IUserModelType
+	IUserCollectionModelType
 } from '../stores/storeTypes';
 import '../styles/ChatMsgBox.scss';
 import ChatPiece from './ChatPiece';
@@ -26,7 +25,7 @@ interface IChatMsgBoxObj {
 	txtChat: HTMLInputElement;
 }
 
-// mobx inject 로 감싸져 export 가 되었으므로 wrappedInstance 로 노출해야함
+// mobx inject 로 감싸져 export 가 되었으므로 ref 쓰기위해 wrappedInstance 로 노출해야함
 interface IChatMsgBox {
 	wrappedInstance: IChatMsgBoxObj;
 }
@@ -37,7 +36,7 @@ class ChatMsgBox extends Component<IProps> {
 	private chatBox: HTMLDivElement;
 
 	// 컴포넌트 update 시 스크롤 맨 아래로 이동
-	public componentDidUpdate(prevProps, prevStates) {
+	public componentDidUpdate() {
 		this.fnScrollMove();
 	}
 

@@ -9,7 +9,7 @@ interface IProps {
 
 const ChatPiece: React.FC<IProps> = (props: IProps) => {
 	const { isSelf, message, user } = props.messageModel;
-	const { isActive, nickName, nickId, uniqueId } = user;
+	const { nickName } = user;
 
 	// 줄바꿈을 <br /> 로 치환
 	const msg = message.replace(/(?:\r\n|\r|\n)/g, '<br />');

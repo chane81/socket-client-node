@@ -2,11 +2,7 @@ import { inject, observer } from 'mobx-react';
 import { onAction, onPatch } from 'mobx-state-tree';
 import React, { Component } from 'react';
 import ChatMsgBox, { IChatMsgBox } from '../components/ChatMsgBox';
-import {
-	IMessageModelType,
-	IStore,
-	IUserModelType
-} from '../stores/storeTypes';
+import { IMessageModelType, IStore } from '../stores/storeTypes';
 
 interface IProps {
 	store?: IStore;
