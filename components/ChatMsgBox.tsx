@@ -3,8 +3,8 @@ import { inject, observer } from 'mobx-react';
 import React, { Component } from 'react';
 import {
 	IMessageModelType,
-	IUserModelType,
-	IUsersModelType
+	IUserCollectionModelType,
+	IUserModelType
 } from '../stores/storeTypes';
 import '../styles/ChatMsgBox.scss';
 import ChatPiece from './ChatPiece';
@@ -14,9 +14,9 @@ interface IProps {
 	propHandleChange: (currentMessage: string) => void;
 	propHandleSend: () => void;
 	propHandleSignout: () => void;
-	propHandleUserClick: (userModel: IUserModelType) => void;
+	propHandleUserClick: (uniqueId: string) => void;
 	propMessages: IMessageModelType[];
-	propUsers: IUsersModelType;
+	propUsers: IUserCollectionModelType;
 	propCurrentMessage: string;
 }
 
@@ -86,19 +86,12 @@ class ChatMsgBox extends Component<IProps> {
 			propHandleUserClick
 		} = this.props;
 
+		// console.log('ChatMsgBox', JSON.stringify(propUsers.users));
+
 		return (
 			<div className={'root-chat-msg-box'}>
 				<div className={'users-and-chat'}>
 					<div className={'user-wrap'}>
-						<div
-							style={{
-								display: 'flex',
-								flexFlow: 'column'
-							}}
-						>
-							<i className='fas fa-users' />
-							<div>전체</div>
-						</div>
 						{propUsers.users.map((data) => (
 							<UserPicture
 								userModel={data}
@@ -107,7 +100,8 @@ class ChatMsgBox extends Component<IProps> {
 								sizeRem={'2.5rem'}
 								isTransparent={false}
 								isHover={true}
-								handleClick={propHandleUserClick}
+								propHandleUserClick={propHandleUserClick}
+								isShowNickName={true}
 							/>
 						))}
 					</div>
@@ -116,22 +110,13 @@ class ChatMsgBox extends Component<IProps> {
 						className={'chat-box'}
 					>
 						{propMessages.map((data, index) => (
-							<ChatPiece
-								isSelf={data.isSelf}
-								message={data.message}
-								nickName={data.nickName}
-								nickId={data.nickId}
-								key={index}
-							/>
+							<ChatPiece messageModel={data} key={index} />
 						))}
 					</div>
 				</div>
 
 				<div className={'chat-input-box'} onClick={this.handleBoxClick}>
-					<span
-						className={'btn-out-container'}
-						onClick={this.handleSignout}
-					>
+					<span className={'btn-out-container'} onClick={this.handleSignout}>
 						<i className={'fas fa-sign-out-alt btn-icon'} />
 					</span>
 					<input

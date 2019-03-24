@@ -2,7 +2,11 @@ import { inject, observer } from 'mobx-react';
 import { onAction, onPatch } from 'mobx-state-tree';
 import React, { Component } from 'react';
 import ChatMsgBox, { IChatMsgBox } from '../components/ChatMsgBox';
-import { IStore, IUserModelType } from '../stores/storeTypes';
+import {
+	IMessageModelType,
+	IStore,
+	IUserModelType
+} from '../stores/storeTypes';
 
 interface IProps {
 	store?: IStore;
@@ -13,7 +17,6 @@ class ChatMsgBoxContainer extends Component<IProps> {
 	// private chatMsgBox = createRef();
 	private chatMsgBox: IChatMsgBox;
 
-	// 소켓 연결
 	public componentDidMount() {
 		const store = this.props.store!;
 
@@ -37,42 +40,57 @@ class ChatMsgBoxContainer extends Component<IProps> {
 				setTimeout(() => {
 					// (this.chatMsgBox
 					// 	.wrappedInstance as IChatMsgBox).handleBoxClick();
-					this.chatMsgBox.wrappedInstance.handleBoxClick();
+					this.chatMsgBox.wrappedInstance!.handleBoxClick();
 				});
 			}
 		});
 	}
 
+	// 나가기 클릭시
 	public handleSignout = () => {
-		const { socketModel, usersModel } = this.props.store!;
+		const { socketModel, userCollectionModel } = this.props.store!;
 
 		// 소캣닫기
 		socketModel.setSocketClose();
 
 		// 소캣 스토어 초기화
 		socketModel.setInit();
-		usersModel.setInit();
+		userCollectionModel.setInit();
 	};
 
-	public handleUserClick = (userModel: IUserModelType) => {
-		const { usersModel } = this.props.store!;
-		usersModel.setUserActive(userModel);
+	public handleUserClick = (uniqueId: string) => {
+		const { userCollectionModel } = this.props.store!;
+		userCollectionModel.setUserActive(uniqueId);
+		// this.forceUpdate();
+	};
+
+	// 현재 사용자가 메시지 입력시 상태값에 메시지 저장
+	public handleSetCurrentMessage = (currentMessage: string) => {
+		const { socketModel, userCollectionModel } = this.props.store!;
+
+		const msg: IMessageModelType = {
+			isSelf: true,
+			message: currentMessage,
+			user: { ...userCollectionModel.currentUser }
+		};
+
+		socketModel.setCurrentMessage(msg);
 	};
 
 	public render() {
-		const { socketModel, usersModel } = this.props.store!;
+		const { socketModel, userCollectionModel } = this.props.store!;
 
 		return (
 			<div>
 				<ChatMsgBox
-					propCurrentMessage={socketModel.currentMessage.message}
-					propHandleChange={socketModel.setCurrentMessage}
-					propHandleSend={socketModel.setSendMessage}
+					ref={(ref: any) => (this.chatMsgBox = ref)}
+					propHandleUserClick={this.handleUserClick}
+					propHandleChange={this.handleSetCurrentMessage}
 					propHandleSignout={this.handleSignout}
 					propMessages={socketModel.messages}
-					propUsers={usersModel}
-					propHandleUserClick={this.handleUserClick}
-					ref={(ref: any) => (this.chatMsgBox = ref)}
+					propUsers={userCollectionModel}
+					propCurrentMessage={socketModel.currentMessage.message}
+					propHandleSend={socketModel.setSendMessage}
 				/>
 			</div>
 		);
