@@ -1,6 +1,6 @@
 import classNames from 'classnames/bind';
-import { inject, observer } from 'mobx-react';
-import React, { useState } from 'react';
+import { observer } from 'mobx-react';
+import React from 'react';
 import { IUserModelType } from '../stores/storeTypes';
 import styles from '../styles/UserPicture.scss';
 const cx = classNames.bind(styles);
@@ -20,8 +20,6 @@ interface IProps {
 const UserPicture: React.FC<IProps> = (props: IProps) => {
 	const {
 		userModel,
-		// nickId,
-		// nickName,
 		isShadow = true,
 		isTransparent = true,
 		isHover = false,
