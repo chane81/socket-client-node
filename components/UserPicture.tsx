@@ -29,6 +29,11 @@ const UserPicture: React.FC<IProps> = (props: IProps) => {
 		propHandleUserClick
 	} = props;
 
+	const backgroundImage =
+		(userModel.nickId !== 'all' &&
+			`url('https://randomuser.me/api/portraits/thumb/men/${userModel.nickId}.jpg')`) ||
+		'';
+
 	return (
 		userModel && (
 			<div
@@ -47,7 +52,7 @@ const UserPicture: React.FC<IProps> = (props: IProps) => {
 						'user-img-shadow': isShadow
 					})}
 					style={{
-						backgroundImage: `url('https://randomuser.me/api/portraits/thumb/men/${userModel.nickId}.jpg')`,
+						backgroundImage,
 						backgroundSize: sizeRem,
 						height: sizeRem,
 						width: sizeRem

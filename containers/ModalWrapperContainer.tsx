@@ -14,24 +14,14 @@ interface IProps {
 const ModalWrapperContainer: React.FC<IProps> = ({ store }) => {
 	const { getModalVisible } = store!;
 
-	const {
-		socket,
-		setMessagesPush,
-		setSocket
-		// setCurrentNickName,
-		// setCurrentNickId,
-		// getModalVisible
-		// setCurrentUser,
-		// setCurrentUniqueId
-	} = store!.socketModel;
+	const { socket, setMessagesPush, setSocket } = store!.socketModel;
 
 	const {
 		setUserIn,
 		setUserOut,
 		setCurrentUser,
 		setCurrentUniqueId,
-		currentUser,
-		identifier
+		currentUser
 	} = store!.userCollectionModel;
 
 	const handleNickRegist = (nickName) => {
@@ -73,7 +63,7 @@ const ModalWrapperContainer: React.FC<IProps> = ({ store }) => {
 
 			// 접속 사용자정보들 push
 			socketIo.on('client.user.in', (context) => {
-				const { user } = JSON.parse(context);
+				const user = JSON.parse(context);
 
 				console.log('client.user.in:', user);
 
@@ -86,14 +76,16 @@ const ModalWrapperContainer: React.FC<IProps> = ({ store }) => {
 
 				const reqUsersData = JSON.parse(context);
 
-				reqUsersData.map((data) => {
-					data.uniqueId != currentUser.uniqueId && setUserIn(data);
-				});
+				reqUsersData.map(
+					(data) => data.uniqueId !== currentUser.uniqueId && setUserIn(data)
+				);
 			});
 
 			// 접속끊긴 사용자정보들 remove
 			socketIo.on('client.user.out', (context) => {
 				const user = JSON.parse(context);
+
+				console.log('client.user.out:', user);
 
 				setUserOut(user);
 			});
