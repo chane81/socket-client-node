@@ -27,19 +27,10 @@ const UserPicture: React.FC<IProps> = (props: IProps) => {
 		isHover = false,
 		margin,
 		sizeRem = '3rem',
-		isActive = false,
 		isShowNickName = false,
 		propHandleUserClick
 	} = props;
 
-	// 클릭시 백그라운드 컬러 토글을 위한 상태값
-	// const [ isActiveState, setActiveState ] = useState(isActive);
-
-	// 클릭시 백그라운드 컬러 토글
-	// const handleClick = () => {
-	// 	//setActiveState(!isActiveState);
-	// };
-	console.log('picture com');
 	return (
 		userModel && (
 			<div
@@ -74,5 +65,4 @@ const UserPicture: React.FC<IProps> = (props: IProps) => {
 	);
 };
 
-// export default UserPicture;
 export default observer(UserPicture);
