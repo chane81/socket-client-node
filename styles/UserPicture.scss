@@ -1,6 +1,7 @@
 @import 'global.scss';
 
 .root-user-picture {
+	position: relative;
 	display: flex;
 	flex-flow: column;
 	align-items: center;
@@ -16,8 +17,12 @@
 	&.hover-action:hover {
 		background: white;
 		cursor: pointer;
-		box-shadow: 0 20px 40px rgba(0, 0, 0, 0.03),
-			0 20px 40px rgba(0, 0, 0, 0.03);
+		box-shadow: 0 20px 40px rgba(0, 0, 0, 0.03), 0 20px 40px rgba(0, 0, 0, 0.03);
+	}
+	&.bg-white {
+		background: white;
+		cursor: default !important;
+		box-shadow: 0 20px 40px rgba(0, 0, 0, 0.03), 0 20px 40px rgba(0, 0, 0, 0.03);
 	}
 	.user-img {
 		background-repeat: no-repeat;
@@ -27,5 +32,16 @@
 			box-shadow: 0 10px 10px rgba(0, 0, 0, 0.14),
 				0 10px 10px rgba(0, 0, 0, 0.14);
 		}
+		display: flex;
+		flex-flow: column;
+		justify-content: center;
+	}
+	.msg-unread {
+		position: absolute !important;
+		width: 0.4rem;
+		height: 0.4rem;
+		left: 60px;
+		background: red;
+		border-radius: 80px;
 	}
 }

@@ -6,22 +6,42 @@ import {
 	types
 } from 'mobx-state-tree';
 import socketStore from './socketStore';
-import usersStore from './usersStore';
+import userCollectionStore from './userCollectionStore';
 
 type IStore = Instance<typeof store>;
 type IStoreSnapshotIn = SnapshotIn<typeof store>;
 type IStoreSnapshotOut = SnapshotOut<typeof store>;
 let initStore: IStore = null as any;
 
-const store = types.model('store', {
-	socketModel: socketStore.model,
-	usersModel: usersStore.model
-});
+const store = types
+	.model('store', {
+		/** 스토어 아이덴티티 */
+		identifier: types.optional(types.identifier, 'store'),
+
+		/** 모달 visible 여부 true/false */
+		modalVisible: types.optional(types.boolean, false),
+
+		/** 소켓 모델 */
+		socketModel: types.optional(socketStore.model, () => socketStore.create),
+
+		/** 사용자 컬렉션 모델 */
+		userCollectionModel: types.optional(
+			userCollectionStore.model,
+			() => userCollectionStore.create
+		)
+	})
+	.views((self) => ({
+		/** 모달을 보여줘야할지 여부 */
+		get getModalVisible() {
+			return self.userCollectionModel.currentUser.uniqueId ? false : true;
+		}
+	}));
 
 const initializeStore = (isServer, snapshot = null) => {
 	const defaultValue = {
+		modalVisible: false,
 		socketModel: { ...socketStore.defaultValue },
-		usersModel: { ...usersStore.defaultValue }
+		userCollectionModel: { ...userCollectionStore.defaultValue }
 	};
 
 	// 서버일 경우에 대한 로직 작성

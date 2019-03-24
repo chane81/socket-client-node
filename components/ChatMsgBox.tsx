@@ -1,7 +1,10 @@
 import _ from 'lodash';
 import { inject, observer } from 'mobx-react';
 import React, { Component } from 'react';
-import { IMessageModelType, IUsersModelType } from '../stores/storeTypes';
+import {
+	IMessageModelType,
+	IUserCollectionModelType
+} from '../stores/storeTypes';
 import '../styles/ChatMsgBox.scss';
 import ChatPiece from './ChatPiece';
 import UserPicture from './UserPicture';
@@ -10,9 +13,11 @@ interface IProps {
 	propHandleChange: (currentMessage: string) => void;
 	propHandleSend: () => void;
 	propHandleSignout: () => void;
+	propHandleUserClick: (uniqueId: string) => void;
 	propMessages: IMessageModelType[];
-	propUsers: IUsersModelType;
+	propUsers: IUserCollectionModelType;
 	propCurrentMessage: string;
+	propUniqueId: string;
 }
 
 // 해당 컴포넌트기능 외부 노출용 인터페이스
@@ -21,7 +26,7 @@ interface IChatMsgBoxObj {
 	txtChat: HTMLInputElement;
 }
 
-// mobx inject 로 감싸져 export 가 되었으므로 wrappedInstance 로 노출해야함
+// mobx inject 로 감싸져 export 가 되었으므로 ref 쓰기위해 wrappedInstance 로 노출해야함
 interface IChatMsgBox {
 	wrappedInstance: IChatMsgBoxObj;
 }
@@ -32,7 +37,7 @@ class ChatMsgBox extends Component<IProps> {
 	private chatBox: HTMLDivElement;
 
 	// 컴포넌트 update 시 스크롤 맨 아래로 이동
-	public componentDidUpdate(prevProps, prevStates) {
+	public componentDidUpdate() {
 		this.fnScrollMove();
 	}
 
@@ -74,7 +79,15 @@ class ChatMsgBox extends Component<IProps> {
 	};
 
 	public render() {
-		const { propMessages, propUsers, propCurrentMessage } = this.props;
+		const {
+			propMessages,
+			propUsers,
+			propCurrentMessage,
+			propHandleUserClick,
+			propUniqueId
+		} = this.props;
+
+		console.log('ChatMsgBox', JSON.stringify(propUsers.users));
 
 		return (
 			<div className={'root-chat-msg-box'}>
@@ -82,13 +95,16 @@ class ChatMsgBox extends Component<IProps> {
 					<div className={'user-wrap'}>
 						{propUsers.users.map((data) => (
 							<UserPicture
-								nickId={data.nickId}
-								nickName={data.nickName}
+								userModel={data}
 								key={data.uniqueId}
 								isShadow={true}
 								sizeRem={'2.5rem'}
 								isTransparent={false}
 								isHover={true}
+								propHandleUserClick={propHandleUserClick}
+								isShowNickName={true}
+								activeUniqueId={propUniqueId}
+								isRead={data.isRead}
 							/>
 						))}
 					</div>
@@ -97,22 +113,13 @@ class ChatMsgBox extends Component<IProps> {
 						className={'chat-box'}
 					>
 						{propMessages.map((data, index) => (
-							<ChatPiece
-								isSelf={data.isSelf}
-								message={data.message}
-								nickName={data.nickName}
-								nickId={data.nickId}
-								key={index}
-							/>
+							<ChatPiece messageModel={data} key={index} />
 						))}
 					</div>
 				</div>
 
 				<div className={'chat-input-box'} onClick={this.handleBoxClick}>
-					<span
-						className={'btn-out-container'}
-						onClick={this.handleSignout}
-					>
+					<span className={'btn-out-container'} onClick={this.handleSignout}>
 						<i className={'fas fa-sign-out-alt btn-icon'} />
 					</span>
 					<input

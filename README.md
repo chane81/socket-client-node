@@ -251,6 +251,24 @@ heroku login -i
 
 
 
+
+
+
+
+- mobx-state-tree 에서 types.reference 를 쓸 때 참조되는 모델의 데이터를 가져오지 못하는 이슈가 있었다.
+  - 참조되는 데이터를 가져오기 위해서 해당 참조되는 스토어와 쓰는 스토어 모두 `identifier`(유일한값의 스토어명) 를 부여해야한다.
+  ```js
+    types.model('socketModel', {
+      /** identifier 부여 예시 */
+      identifier: types.optional(types.identifier, 'socketModel'),
+
+      /** types.reference 예시 */
+      userCollection: types.optional(
+        types.reference(userCollectionStore.model),
+        () => userCollectionStore.create
+      )
+    }
+  ```
 # heroku 클라이언트 URL
 - https://socket-client-node.herokuapp.com/
 

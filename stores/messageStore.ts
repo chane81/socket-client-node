@@ -1,18 +1,34 @@
 import { Instance, types } from 'mobx-state-tree';
+import userStore from './userStore';
 
-// 채팅 메시지 모델 - 채팅메시지(message), 메시지를 보낸 닉네임(nickname), 내가 보낸 메시지 인지여부(isSelf) 가 들어감
+// 채팅 메시지 모델
 const model = types.model('messageModel', {
+	/** 내가 보낸 메시지 인지여부 true/false  */
 	isSelf: types.boolean,
+
+	/** 메시지 읽었는지여부 true/false */
+	isRead: types.boolean,
+
+	/** 메시지 보내는이 uniqueId */
+	msgFromUniqueId: types.string,
+
+	/** 메시지  받는이 uniqueId */
+	msgToUniqueId: types.string,
+
+	/** 채팅메시지 */
 	message: types.string,
-	nickId: types.string,
-	nickName: types.string
+
+	/** 메시지 주체 유저 */
+	user: userStore.model
 });
 
 const defaultValue = {
+	isRead: false,
 	isSelf: false,
 	message: '',
-	nickId: '',
-	nickName: ''
+	msgFromUniqueId: '',
+	msgToUniqueId: '',
+	user: userStore.defaultValue
 };
 
 const create = model.create(defaultValue);

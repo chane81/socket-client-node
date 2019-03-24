@@ -12,7 +12,7 @@ interface IProps {
 class ModalWrapper extends Component<IProps> {
 	private txtNickBox: any = createRef<HTMLInputElement>();
 
-	// 확인버튼 클릭시 프로퍼티 함수에 닉네임 전달하여 수행하게 함
+	// 닉네임 등록
 	public handleClick = () => {
 		// store 에 닉네임 등록
 		this.props.handleNickRegist(this.txtNickBox.current.value);
@@ -40,21 +40,17 @@ class ModalWrapper extends Component<IProps> {
 					hide: !this.props.isVisible
 				})}
 			>
-				<div className='nicknm-gray-background' />
+				<div />
 				<div className='nicknm-wrapper'>
 					<div className='nicknm-modal'>
-						<div
-							className='nicknm-input-container'
-							onClick={this.handleFocus}
-						>
+						<div className='nicknm-input-container' onClick={this.handleFocus}>
 							<input
-								className='nicknm-input'
 								ref={this.txtNickBox}
 								type='text'
 								placeholder='별명을 입력해주세요!'
 								onKeyPress={this.handleSendKeyPress}
 							/>
-							<span className='nicknm-btn-add' onClick={this.handleClick}>
+							<span onClick={this.handleClick}>
 								<i className='fas fa-user fa-2x nicknm-user-icon' />
 							</span>
 						</div>

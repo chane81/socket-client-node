@@ -13,16 +13,18 @@
   "eslint.autoFixOnSave": false,
   "eslint.alwaysShowStatus": true,
 
+  // typescript 설정
+  "typescript.locale": "ko",
+
   // perttier 설정
   "prettier.jsxSingleQuote": true,
   "prettier.tabWidth": 2,
   "prettier.typescriptEnable": ["typescript","typescriptreact"],
-  "prettier.printWidth": 75,
+  "prettier.printWidth": 80,
   "prettier.singleQuote": true,
   "prettier.bracketSpacing": true,
   "prettier.trailingComma": "none",
   "prettier.flattenTernaries": false,
-
   "editor.codeActionsOnSave": {
     "source.fixAll.tslint": true
   },
@@ -51,15 +53,11 @@
   "terminal.integrated.shell.windows": "C:\\WINDOWS\\System32\\cmd.exe",
   "terminal.integrated.cursorBlinking": true,
   "terminal.integrated.cursorStyle": "underline",
-  
+
   // 기타 설정
-  "gitlens.advanced.messages": {
-    "suppressFileNotUnderSourceControlWarning": true
-  },
   "git.autofetch": true,
   "liveServer.settings.donotShowInfoMsg": true,
   "liveServer.settings.donotVerifyTags": true,
   "sync.gist": "22d8153e6726882b514d8cab04b44d44",
-  "markdown-pdf.highlightStyle": "github.css",
-  "javascript.updateImportsOnFileMove.enabled": "always",
+  "javascript.updateImportsOnFileMove.enabled": "always"
 }

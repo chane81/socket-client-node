@@ -1,54 +1,78 @@
 import classNames from 'classnames/bind';
+import { observer } from 'mobx-react';
 import React from 'react';
+import { IUserModelType } from '../stores/storeTypes';
 import styles from '../styles/UserPicture.scss';
-
 const cx = classNames.bind(styles);
 
 interface IProps {
-	nickId: string;
-	nickName?: string;
+	activeUniqueId?: string;
+	userModel: IUserModelType;
 	isShadow?: boolean;
 	margin?: string;
 	sizeRem?: string;
 	isTransparent?: boolean;
 	isHover?: boolean;
+	isActive?: boolean;
+	isShowNickName?: boolean;
+	isRead?: boolean;
+	propHandleUserClick?: (uniqueId: string) => void;
 }
 
 const UserPicture: React.FC<IProps> = (props: IProps) => {
 	const {
-		nickId,
-		nickName,
+		activeUniqueId = '',
+		userModel,
 		isShadow = true,
 		isTransparent = true,
 		isHover = false,
 		margin,
-		sizeRem = '3rem'
+		sizeRem = '3rem',
+		isShowNickName = false,
+		isRead = false,
+		propHandleUserClick
 	} = props;
 
+	const backgroundImage =
+		(userModel.uniqueId !== '' &&
+			`url('https://randomuser.me/api/portraits/thumb/men/${userModel.nickId}.jpg')`) ||
+		'';
+
+	const isActive = userModel.uniqueId === activeUniqueId;
+
 	return (
-		<div
-			className={cx('root-user-picture', {
-				'hover-action': isHover,
-				trans: isTransparent
-			})}
-			style={{
-				margin
-			}}
-		>
+		userModel && (
 			<div
-				className={cx('user-img', {
-					'user-img-shadow': isShadow
+				onClick={() => propHandleUserClick!(userModel.uniqueId)}
+				className={cx('root-user-picture', {
+					'bg-white': isActive,
+					'hover-action': isHover,
+					trans: isTransparent
 				})}
 				style={{
-					backgroundImage: `url('https://randomuser.me/api/portraits/thumb/men/${nickId}.jpg')`,
-					backgroundSize: sizeRem,
-					height: sizeRem,
-					width: sizeRem
+					margin
 				}}
-			/>
-			<div className={'user-nick'}>{nickName}</div>
-		</div>
+			>
+				<div className={cx({ 'msg-unread': !isRead })} />
+				<div
+					className={cx('user-img', {
+						'user-img-shadow': isShadow
+					})}
+					style={{
+						backgroundImage,
+						backgroundSize: sizeRem,
+						height: sizeRem,
+						width: sizeRem
+					}}
+				>
+					{userModel.uniqueId === '' && <i className='fas fa-users fa-2x' />}
+				</div>
+				{isShowNickName && (
+					<div className={'user-nick'}>{userModel.nickName}</div>
+				)}
+			</div>
+		)
 	);
 };
 
-export default UserPicture;
+export default observer(UserPicture);

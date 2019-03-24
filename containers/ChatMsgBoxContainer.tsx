@@ -1,8 +1,9 @@
+import _ from 'lodash';
 import { inject, observer } from 'mobx-react';
 import { onAction, onPatch } from 'mobx-state-tree';
 import React, { Component } from 'react';
 import ChatMsgBox, { IChatMsgBox } from '../components/ChatMsgBox';
-import { IStore } from '../stores/storeTypes';
+import { IMessageModelType, IStore } from '../stores/storeTypes';
 
 interface IProps {
 	store?: IStore;
@@ -13,7 +14,6 @@ class ChatMsgBoxContainer extends Component<IProps> {
 	// private chatMsgBox = createRef();
 	private chatMsgBox: IChatMsgBox;
 
-	// 소켓 연결
 	public componentDidMount() {
 		const store = this.props.store!;
 
@@ -37,36 +37,86 @@ class ChatMsgBoxContainer extends Component<IProps> {
 				setTimeout(() => {
 					// (this.chatMsgBox
 					// 	.wrappedInstance as IChatMsgBox).handleBoxClick();
-					this.chatMsgBox.wrappedInstance.handleBoxClick();
+					this.chatMsgBox.wrappedInstance!.handleBoxClick();
 				});
 			}
 		});
 	}
 
+	// 나가기 클릭시
 	public handleSignout = () => {
-		const { socketModel, usersModel } = this.props.store!;
+		const { socketModel, userCollectionModel } = this.props.store!;
 
 		// 소캣닫기
 		socketModel.setSocketClose();
 
 		// 소캣 스토어 초기화
 		socketModel.setInit();
-		usersModel.setInit();
+		userCollectionModel.setInit();
+	};
+
+	// 좌측 사용자 이미지 클릭시 1:1 채팅 활성화
+	public handleUserClick = (uniqueId: string) => {
+		const { socketModel, userCollectionModel } = this.props.store!;
+		userCollectionModel.setActiveUniqueId(uniqueId);
+
+		// message read 처리
+		socketModel.setMessageRead();
+	};
+
+	// 현재 사용자가 메시지 입력시 상태값에 메시지 저장
+	public handleSetCurrentMessage = (currentMessage: string) => {
+		const { socketModel, userCollectionModel } = this.props.store!;
+
+		const msg: IMessageModelType = {
+			isRead: false,
+			isSelf: true,
+			message: currentMessage,
+			msgFromUniqueId: userCollectionModel.currentUser.uniqueId,
+			msgToUniqueId: userCollectionModel.activeUniqueId,
+			user: { ...userCollectionModel.currentUser }
+		};
+
+		socketModel.setCurrentMessage(msg);
 	};
 
 	public render() {
-		const { socketModel, usersModel } = this.props.store!;
+		const { socketModel, userCollectionModel } = this.props.store!;
+
+		// 각 탭에 맞는 메시지 보내기 위해 필터링
+		const messages = _.filter(
+			socketModel.messages,
+			(data: IMessageModelType) => {
+				const to = data.msgToUniqueId;
+				const from = data.msgFromUniqueId;
+				const curId = userCollectionModel.currentUser.uniqueId;
+				const activeId = userCollectionModel.activeUniqueId;
+
+				if (activeId === '') {
+					// 전체 메시지
+					return to === '';
+				} else {
+					// 개별 메시지
+					return (
+						(from === activeId && to === curId) ||
+						(from === curId && to === activeId)
+					);
+				}
+			}
+		);
 
 		return (
 			<div>
 				<ChatMsgBox
-					propCurrentMessage={socketModel.currentMessage.message}
-					propHandleChange={socketModel.setCurrentMessage}
-					propHandleSend={socketModel.setSendMessage}
-					propHandleSignout={this.handleSignout}
-					propMessages={socketModel.messages}
-					propUsers={usersModel}
 					ref={(ref: any) => (this.chatMsgBox = ref)}
+					propHandleUserClick={this.handleUserClick}
+					propHandleChange={this.handleSetCurrentMessage}
+					propHandleSignout={this.handleSignout}
+					propMessages={messages}
+					propUsers={userCollectionModel}
+					propCurrentMessage={socketModel.currentMessage.message}
+					propHandleSend={socketModel.setSendMessage}
+					propUniqueId={userCollectionModel.activeUniqueId}
 				/>
 			</div>
 		);
