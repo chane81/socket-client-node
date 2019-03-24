@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import { applySnapshot, Instance, types } from 'mobx-state-tree';
+import { bool } from 'prop-types';
 import userStore, { IUserModelType } from './userStore';
 
 // 유저 컬렉션 모델
@@ -47,8 +48,6 @@ const model = types
 			// _.remove(self.users, (data) => data.uniqueId === userModel.uniqueId);
 			// _.pullAllBy(self.users, [ { uniqueId: userModel.uniqueId } ], 'uniqueId');
 
-			console.log('setUserOut', JSON.stringify(self.users));
-
 			// 만약 나가는 사용자가 현재 1:1 채팅중인 사용자라면 '전체' 로 채팅방을 바꾼다.
 			self.activeUniqueId =
 				self.activeUniqueId === user.uniqueId ? '' : self.activeUniqueId;
@@ -58,6 +57,14 @@ const model = types
 			});
 
 			self.users.splice(idx, 1);
+		},
+		// 사용자 읽음(빨강 dot) 처리
+		setUsersRead(unreadUniqueId: string[]) {
+			_.map(self.users, (data: IUserModelType) => {
+				const isRead = unreadUniqueId.indexOf(data.uniqueId) === -1;
+
+				data.isRead = isRead;
+			});
 		},
 		/** 초기화 */
 		setInit() {
@@ -70,7 +77,7 @@ const defaultValue = {
 	currentUser: userStore.defaultValue,
 	users: [
 		{
-			// isActive: true,
+			isRead: true,
 			nickId: 'all',
 			nickName: '전체',
 			uniqueId: ''

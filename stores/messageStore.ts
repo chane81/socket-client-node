@@ -6,8 +6,8 @@ const model = types.model('messageModel', {
 	/** 내가 보낸 메시지 인지여부 true/false  */
 	isSelf: types.boolean,
 
-	/** 메시지 받는사람의 uniqueId */
-	// activeUniqueId: types.string,
+	/** 메시지 읽었는지여부 true/false */
+	isRead: types.boolean,
 
 	/** 메시지 보내는이 uniqueId */
 	msgFromUniqueId: types.string,
@@ -23,6 +23,7 @@ const model = types.model('messageModel', {
 });
 
 const defaultValue = {
+	isRead: false,
 	isSelf: false,
 	message: '',
 	msgFromUniqueId: '',

@@ -15,6 +15,7 @@ interface IProps {
 	isHover?: boolean;
 	isActive?: boolean;
 	isShowNickName?: boolean;
+	isRead?: boolean;
 	propHandleUserClick?: (uniqueId: string) => void;
 }
 
@@ -28,6 +29,7 @@ const UserPicture: React.FC<IProps> = (props: IProps) => {
 		margin,
 		sizeRem = '3rem',
 		isShowNickName = false,
+		isRead = false,
 		propHandleUserClick
 	} = props;
 
@@ -51,6 +53,7 @@ const UserPicture: React.FC<IProps> = (props: IProps) => {
 					margin
 				}}
 			>
+				<div className={cx({ 'msg-unread': !isRead })} />
 				<div
 					className={cx('user-img', {
 						'user-img-shadow': isShadow

@@ -87,7 +87,7 @@ class ChatMsgBox extends Component<IProps> {
 			propUniqueId
 		} = this.props;
 
-		// console.log('ChatMsgBox', JSON.stringify(propUsers.users));
+		console.log('ChatMsgBox', JSON.stringify(propUsers.users));
 
 		return (
 			<div className={'root-chat-msg-box'}>
@@ -104,6 +104,7 @@ class ChatMsgBox extends Component<IProps> {
 								propHandleUserClick={propHandleUserClick}
 								isShowNickName={true}
 								activeUniqueId={propUniqueId}
+								isRead={data.isRead}
 							/>
 						))}
 					</div>

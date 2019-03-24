@@ -38,13 +38,30 @@ const model = types
 		setSocket(socket) {
 			self.socket = socket;
 		},
-		// /** 1:1 채팅할 상대 uniqueId set */
-		// setActiveUniqueId(uniqueId: string) {
-		// 	self.activeUniqueId = uniqueId;
-		// },
 		/** 주고 받은 메시지들 push */
 		setMessagesPush(messageModel: IMessageModelType) {
-			self.messages.push({ ...messageModel });
+			const pushMessage = { ...messageModel };
+			const activeId = self.userCollection.activeUniqueId;
+			const fromId = pushMessage.msgFromUniqueId;
+			const toId = pushMessage.msgToUniqueId;
+
+			// 전체 BroadCast 메시지 인지 여부
+			const isBroadCast = pushMessage.msgToUniqueId === '';
+
+			// 현재 활성화된 1:1 창에서 메시지를 받은 경우 읽었다고 데이터 set
+			if (
+				// 자기 자신의 메시지 이거나
+				messageModel.isSelf ||
+				// 전체창인데 전체메시지로 온거이거나
+				(activeId === '' && isBroadCast) ||
+				// 그외에는 활성화창 ID 와 동일한 from ID에 대해 true
+				(activeId === fromId && toId !== '')
+			) {
+				pushMessage.isRead = true;
+				pushMessage.user.isRead = true;
+			}
+
+			self.messages.push(pushMessage);
 		},
 		/** 현재 접속한 유저가 보낼려는 메시지 set  */
 		setCurrentMessage(currentMessage: IMessageModelType) {
@@ -55,6 +72,34 @@ const model = types
 			if (self.socket != null) {
 				self.socket.close();
 			}
+		},
+		// 메시지 read 처리
+		setMessageRead() {
+			const unreadUniqueIds: string[] = [];
+			const activeId = self.userCollection.activeUniqueId;
+
+			_.filter(self.messages, {
+				isRead: false
+			}).map((data: IMessageModelType) => {
+				// 전체 BroadCast 메시지 인지 여부
+				const isBroadCast = data.msgToUniqueId === '';
+
+				if (
+					// BroadCast 메시지가 아니면 현재 활성창 ID 와 from ID 를 매치
+					(isBroadCast === false && activeId === data.msgFromUniqueId) ||
+					// BroadCast 메시지 이고 창이 전체창일 경우만 매치
+					(activeId === '' && isBroadCast)
+				) {
+					data.isRead = true;
+					data.user.isRead = true;
+				} else {
+					unreadUniqueIds.push(isBroadCast ? '' : data.user.uniqueId);
+				}
+			});
+
+			// 사용자 정보에서 read 데이터 처리
+			const unreadIdGroupBy = _.uniqBy(unreadUniqueIds, (data) => data);
+			self.userCollection.setUsersRead(unreadIdGroupBy);
 		},
 		// 소켓 send
 		setSendMessage: flow(function*() {
@@ -70,13 +115,6 @@ const model = types
 				);
 
 				console.log('소켓 send:', JSON.stringify(self.currentMessage));
-
-				// 메시지들 배열에 push
-				// const pushMessage: IMessageModelType = {
-				// 	isSelf: self.currentMessage.isSelf,
-				// 	message: self.currentMessage.message,
-				// 	user: { ...self.currentMessage.user }
-				// };
 
 				// 위와 같이 spread 로 넣어주던가 lodash 를 사용해서 deep clone 해야함
 				(self as any).setMessagesPush(_.cloneDeep(self.currentMessage));

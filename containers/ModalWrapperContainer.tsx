@@ -2,9 +2,14 @@ import { inject, observer } from 'mobx-react';
 import React from 'react';
 import io from 'socket.io-client';
 import msgpackParser from 'socket.io-msgpack-parser';
+import userCollectionStore from 'stores/userCollectionStore';
 import ModalWrapper from '../components/ModalWrapper';
 import config from '../config.js';
-import { IStore } from '../stores/storeTypes';
+import {
+	IMessageModelType,
+	IStore,
+	IUserModelType
+} from '../stores/storeTypes';
 
 interface IProps {
 	store?: IStore;
@@ -13,9 +18,15 @@ interface IProps {
 const ModalWrapperContainer: React.FC<IProps> = ({ store }) => {
 	const { getModalVisible } = store!;
 
-	const { socket, setMessagesPush, setSocket } = store!.socketModel;
+	const {
+		socket,
+		setMessageRead,
+		setMessagesPush,
+		setSocket
+	} = store!.socketModel;
 
 	const {
+		activeUniqueId,
 		setUserIn,
 		setUserOut,
 		setCurrentUser,
@@ -57,16 +68,36 @@ const ModalWrapperContainer: React.FC<IProps> = ({ store }) => {
 				const receiveMsg = JSON.parse(context);
 
 				// 메시지들 배열에 push
-				setMessagesPush({ ...receiveMsg, isSelf: false });
+				setMessagesPush({ ...receiveMsg });
+
+				// message read 처리
+				setMessageRead();
 			});
 
 			// 접속 사용자정보들 push
 			socketIo.on('client.user.in', (context) => {
-				const user = JSON.parse(context);
+				const user: IUserModelType = JSON.parse(context);
 
-				console.log('client.user.in:', user);
+				// 접속했다고 메시지 등록
+				const message: IMessageModelType = {
+					isRead: activeUniqueId === '',
+					isSelf: false,
+					message: user.nickName + '(이)가 접속 하였습니다.',
+					msgFromUniqueId: '',
+					msgToUniqueId: '',
+					user: { ...user }
+				};
 
-				setUserIn(user);
+				const pushUser: IUserModelType = {
+					...user,
+					isRead: activeUniqueId === ''
+				};
+
+				// 메시지 push
+				setMessagesPush(message);
+
+				// 사용자 등록
+				setUserIn(pushUser);
 			});
 
 			// 사용자가 처음 접속시에 현재 접속한 유저들정보를 가져온다.
@@ -84,8 +115,20 @@ const ModalWrapperContainer: React.FC<IProps> = ({ store }) => {
 			socketIo.on('client.user.out', (context) => {
 				const user = JSON.parse(context);
 
-				console.log('client.user.out:', user);
+				// 접속 끊었다고 메시지 등록
+				const message: IMessageModelType = {
+					isRead: activeUniqueId === '',
+					isSelf: false,
+					message: user.nickName + '(이)가 퇴장 하였습니다.',
+					msgFromUniqueId: '',
+					msgToUniqueId: '',
+					user: { ...user }
+				};
 
+				// 메시지 push
+				setMessagesPush(message);
+
+				// 사용자 제거
 				setUserOut(user);
 			});
 

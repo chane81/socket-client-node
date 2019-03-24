@@ -57,8 +57,11 @@ class ChatMsgBoxContainer extends Component<IProps> {
 
 	// 좌측 사용자 이미지 클릭시 1:1 채팅 활성화
 	public handleUserClick = (uniqueId: string) => {
-		const { userCollectionModel } = this.props.store!;
+		const { socketModel, userCollectionModel } = this.props.store!;
 		userCollectionModel.setActiveUniqueId(uniqueId);
+
+		// message read 처리
+		socketModel.setMessageRead();
 	};
 
 	// 현재 사용자가 메시지 입력시 상태값에 메시지 저장
@@ -66,6 +69,7 @@ class ChatMsgBoxContainer extends Component<IProps> {
 		const { socketModel, userCollectionModel } = this.props.store!;
 
 		const msg: IMessageModelType = {
+			isRead: false,
 			isSelf: true,
 			message: currentMessage,
 			msgFromUniqueId: userCollectionModel.currentUser.uniqueId,
@@ -78,6 +82,8 @@ class ChatMsgBoxContainer extends Component<IProps> {
 
 	public render() {
 		const { socketModel, userCollectionModel } = this.props.store!;
+
+		// 각 탭에 맞는 메시지 보내기 위해 필터링
 		const messages = _.filter(
 			socketModel.messages,
 			(data: IMessageModelType) => {

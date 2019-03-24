@@ -3,8 +3,8 @@ import { Instance, types } from 'mobx-state-tree';
 // 유저 모델
 const model = types
 	.model('userModel', {
-		// /** 이 사용자와의 1:1활성화 여부 truefalse */
-		// isActive: types.optional(types.boolean, false),
+		/** 사용자가 메시지를 읽었는지 여부 true/false */
+		isRead: types.optional(types.boolean, false),
 
 		/** 임시부여된 닉ID(중복될 수 있음) */
 		nickId: types.string,
@@ -16,14 +16,14 @@ const model = types
 		uniqueId: types.string
 	})
 	.actions((self) => ({
-		/** 해당 사용자와의 1:1채팅 활성화 여부 */
-		// setActive(isActive: boolean) {
-		// 	self.isActive = isActive;
-		// }
+		/** 사용자가 메시지를 읽었는지 여부 true/false 세팅 */
+		setRead(isRead: boolean) {
+			self.isRead = isRead;
+		}
 	}));
 
 const defaultValue = {
-	// isActive: false,
+	isRead: false,
 	nickId: '',
 	nickName: '',
 	uniqueId: ''
