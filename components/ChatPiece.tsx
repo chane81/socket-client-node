@@ -24,6 +24,7 @@ const ChatPiece: React.FC<IProps> = (props: IProps) => {
 					isShadow={false}
 					nickId={props.nickId}
 					margin={'0.1rem 0.3rem 0.1rem -0.5rem'}
+					isRead={true}
 				/>
 				<div>
 					<span>
