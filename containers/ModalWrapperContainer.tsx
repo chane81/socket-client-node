@@ -2,7 +2,6 @@ import { inject, observer } from 'mobx-react';
 import React from 'react';
 import io from 'socket.io-client';
 import msgpackParser from 'socket.io-msgpack-parser';
-import userCollectionStore from 'stores/userCollectionStore';
 import ModalWrapper from '../components/ModalWrapper';
 import config from '../config.js';
 import {

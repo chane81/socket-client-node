@@ -130,7 +130,6 @@ const model = types
 	}));
 
 const defaultValue = {
-	// activeUniqueId: '',
 	currentMessage: {
 		...messageStore.defaultValue
 	},

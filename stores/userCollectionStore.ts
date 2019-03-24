@@ -24,9 +24,6 @@ const model = types
 			// 닉네임 set
 			self.currentUser.nickName = currentNickName;
 
-			// 1:1 사용자 활성화여부 false
-			// self.currentUser.isActive = false;
-
 			// 닉ID set
 			self.currentUser.nickId = Math.floor(Math.random() * 50).toString();
 		},
@@ -84,11 +81,6 @@ const defaultValue = {
 		}
 	]
 };
-
-// const defaultValue = {
-// 	currentUser: userStore.defaultValue,
-// 	users: [ { ...userStore.defaultValue } ]
-// };
 
 const create = model.create(defaultValue);
 
