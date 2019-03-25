@@ -274,6 +274,6 @@ heroku login -i
 - https://socket-client-node.herokuapp.com/
 
 # Screenshot
-- 실행화면
+- 실행화면 
 
   ![](/static/images/screen1.png)
