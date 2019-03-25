@@ -77,8 +77,7 @@ const ModalWrapperContainer: React.FC<IProps> = ({ store }) => {
 				// 메시지들 배열에 push
 				setMessagesPush({ ...receiveMsg });
 
-				// message read 처리
-				setMessageRead();
+				// console.log('client.msg.receive', receiveMsg);
 			});
 
 			// 접속 사용자정보들 push
@@ -100,11 +99,11 @@ const ModalWrapperContainer: React.FC<IProps> = ({ store }) => {
 					isRead: activeUniqueId === ''
 				};
 
-				// 메시지 push
-				setMessagesPush(message);
-
 				// 사용자 등록
 				setUserIn(pushUser);
+
+				// 메시지 push
+				setMessagesPush(message);
 			});
 
 			// 사용자가 처음 접속시에 현재 접속한 유저들정보를 가져온다.

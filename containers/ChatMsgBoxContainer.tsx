@@ -61,7 +61,7 @@ class ChatMsgBoxContainer extends Component<IProps> {
 		userCollectionModel.setActiveUniqueId(uniqueId);
 
 		// message read 처리
-		socketModel.setMessageRead();
+		socketModel.setMessageRead(uniqueId);
 	};
 
 	// 현재 사용자가 메시지 입력시 상태값에 메시지 저장

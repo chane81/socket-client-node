@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import { applySnapshot, Instance, types } from 'mobx-state-tree';
+import { unique } from 'mobx/lib/internal';
 import userStore, { IUserModelType } from './userStore';
 
 // 유저 컬렉션 모델
@@ -51,19 +52,13 @@ const model = types
 			self.activeUniqueId =
 				self.activeUniqueId === user.uniqueId ? '' : self.activeUniqueId;
 
+			(self as any).getUser(self.activeUniqueId).setReadValue(true);
+
 			const idx = _.findIndex(self.users, {
 				uniqueId: user.uniqueId
 			});
 
 			self.users.splice(idx, 1);
-		},
-		// 사용자 읽음(빨강 dot) 처리
-		setUsersRead(unreadUniqueId: string[]) {
-			_.map(self.users, (data: IUserModelType) => {
-				const isRead = unreadUniqueId.indexOf(data.uniqueId) === -1;
-
-				data.isRead = isRead;
-			});
 		},
 		/** 초기화 */
 		setInit() {
@@ -72,8 +67,12 @@ const model = types
 	}))
 	.views((self) => ({
 		/** 랜덤ID 생성 */
-		getRandomId() {
+		getRandomId(): string {
 			return Math.floor(Math.random() * 50).toString();
+		},
+		/** uniqueId 에 해당하는 사용자 get */
+		getUser(uniqueId: string): IUserModelType {
+			return _.find(self.users, { uniqueId }) as IUserModelType;
 		}
 	}));
 
@@ -85,7 +84,8 @@ const defaultValue = {
 			isRead: true,
 			nickId: 'all',
 			nickName: '전체',
-			uniqueId: ''
+			uniqueId: '',
+			unreadCount: 0
 		}
 	]
 };

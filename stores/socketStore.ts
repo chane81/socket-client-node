@@ -2,6 +2,7 @@ import _ from 'lodash';
 import { flow } from 'mobx';
 import { applySnapshot, Instance, types } from 'mobx-state-tree';
 import messageStore, { IMessageModelType } from './messageStore';
+import { IUserModelType } from './storeTypes';
 import userCollectionStore from './userCollectionStore';
 
 const model = types
@@ -48,23 +49,35 @@ const model = types
 			const activeId = self.userCollection.activeUniqueId;
 			const fromId = pushMessage.msgFromUniqueId;
 			const toId = pushMessage.msgToUniqueId;
+			const isSelf = messageModel.isSelf;
+			let isRead: boolean = false;
 
 			// 전체 BroadCast 메시지 인지 여부
 			const isBroadCast = pushMessage.msgToUniqueId === '';
 
+			// 사용자정보 get
+			const userModel: IUserModelType = self.userCollection.getUser(
+				isBroadCast ? '' : pushMessage.user.uniqueId
+			);
+
 			// 현재 활성화된 1:1 창에서 메시지를 받은 경우 읽었다고 데이터 set
-			if (
+			isRead =
 				// 자기 자신의 메시지 이거나
 				messageModel.isSelf ||
 				// 전체창인데 전체메시지로 온거이거나
 				(activeId === '' && isBroadCast) ||
 				// 그외에는 활성화창 ID 와 동일한 from ID에 대해 true
-				(activeId === fromId && toId !== '')
-			) {
-				pushMessage.isRead = true;
-				pushMessage.user.isRead = true;
+				(activeId === fromId && toId !== '');
+
+			// 메시지 읽음 처리
+			pushMessage.isRead = isRead;
+
+			// 사용자 정보 읽음 처리
+			if (isSelf === false) {
+				userModel.setReadValue(isRead);
 			}
 
+			// 메시지 상태값에 push
 			self.messages.push(pushMessage);
 		},
 		/** 현재 접속한 유저가 보낼려는 메시지 set  */
@@ -77,33 +90,24 @@ const model = types
 				self.socket.close();
 			}
 		},
-		// 메시지 read 처리
-		setMessageRead() {
-			const unreadUniqueIds: string[] = [];
-			const activeId = self.userCollection.activeUniqueId;
+		/** 해당 사용자의 메시지에 대해 모두 읽음 처리 */
+		setMessageRead(uniqueId: string) {
+			console.log('setMessageRead:', uniqueId);
+			const userModel: IUserModelType = self.userCollection.getUser(uniqueId);
 
-			_.filter(self.messages, {
-				isRead: false
+			_.filter(self.messages, (data: IMessageModelType) => {
+				return (
+					// 읽지 않은 메시지 가져오고
+					data.isRead === false &&
+					// 전체메시지 이면 toUniqueId 가 빈걸로 가져오고
+					((uniqueId === '' && data.msgToUniqueId === '') ||
+						// 그외에는 uniqueId 에 해당하는 메시지 데이터 가져옴
+						data.user.uniqueId === uniqueId)
+				);
 			}).map((data: IMessageModelType) => {
-				// 전체 BroadCast 메시지 인지 여부
-				const isBroadCast = data.msgToUniqueId === '';
-
-				if (
-					// BroadCast 메시지가 아니면 현재 활성창 ID 와 from ID 를 매치
-					(isBroadCast === false && activeId === data.msgFromUniqueId) ||
-					// BroadCast 메시지 이고 창이 전체창일 경우만 매치
-					(activeId === '' && isBroadCast)
-				) {
-					data.isRead = true;
-					data.user.isRead = true;
-				} else {
-					unreadUniqueIds.push(isBroadCast ? '' : data.user.uniqueId);
-				}
+				data.isRead = true;
+				userModel.setReadValue(true);
 			});
-
-			// 사용자 정보에서 read 데이터 처리
-			const unreadIdGroupBy = _.uniqBy(unreadUniqueIds, (data) => data);
-			self.userCollection.setUsersRead(unreadIdGroupBy);
 		},
 		// 소켓 send
 		setSendMessage: flow(function*() {

@@ -53,7 +53,9 @@ const UserPicture: React.FC<IProps> = (props: IProps) => {
 					margin
 				}}
 			>
-				<div className={cx({ 'msg-unread': !isRead })} />
+				<div className={cx('msg-unread', { hide: isRead })}>
+					{userModel.unreadCount}
+				</div>
 				<div
 					className={cx('user-img', {
 						'user-img-shadow': isShadow

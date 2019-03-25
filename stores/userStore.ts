@@ -6,6 +6,8 @@ const model = types
 		/** 사용자가 메시지를 읽었는지 여부 true/false */
 		isRead: types.optional(types.boolean, false),
 
+		unreadCount: types.number,
+
 		/** 임시부여된 닉ID(중복될 수 있음) */
 		nickId: types.string,
 
@@ -16,9 +18,15 @@ const model = types
 		uniqueId: types.string
 	})
 	.actions((self) => ({
-		/** 사용자가 메시지를 읽었는지 여부 true/false 세팅 */
-		setRead(isRead: boolean) {
-			self.isRead = isRead;
+		/** 사용자가 메시지를 읽었는지 여부 true/false 세팅, 읽지 않았을 때 카운트 UP */
+		setReadValue(isUnread: boolean) {
+			self.isRead = isUnread;
+
+			if (self.isRead === false) {
+				self.unreadCount += 1;
+			} else {
+				self.unreadCount = 0;
+			}
 		}
 	}));
 
@@ -26,7 +34,8 @@ const defaultValue = {
 	isRead: false,
 	nickId: '',
 	nickName: '',
-	uniqueId: ''
+	uniqueId: '',
+	unreadCount: 0
 };
 
 const create = model.create(defaultValue);
