@@ -1,6 +1,5 @@
 import _ from 'lodash';
 import { applySnapshot, Instance, types } from 'mobx-state-tree';
-import { bool } from 'prop-types';
 import userStore, { IUserModelType } from './userStore';
 
 // 유저 컬렉션 모델

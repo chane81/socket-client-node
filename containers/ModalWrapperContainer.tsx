@@ -133,7 +133,7 @@ const ModalWrapperContainer: React.FC<IProps> = ({ store }) => {
 
 			// 커넥션 에러
 			socketIo.on('connect_error', () => {
-				console.log('socket error');
+				console.log('connect_error');
 			});
 
 			// 커넥션 끊겼을 때

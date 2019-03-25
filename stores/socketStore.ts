@@ -9,9 +9,6 @@ const model = types
 		/** 스토어 아이덴티티 */
 		identifier: types.optional(types.identifier, 'socketModel'),
 
-		/** 1:1 채팅할 유저 uniqueId */
-		// activeUniqueId: types.string,
-
 		/** 현재 접속한 유저가 보낼려는 메시지 */
 		currentMessage: types.optional(
 			messageStore.model,
@@ -116,7 +113,7 @@ const model = types
 
 				console.log('소켓 send:', JSON.stringify(self.currentMessage));
 
-				// 위와 같이 spread 로 넣어주던가 lodash 를 사용해서 deep clone 해야함
+				// 메시지를 store에 push
 				(self as any).setMessagesPush(_.cloneDeep(self.currentMessage));
 			}
 
