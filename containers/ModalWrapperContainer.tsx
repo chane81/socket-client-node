@@ -19,7 +19,6 @@ const ModalWrapperContainer: React.FC<IProps> = ({ store }) => {
 
 	const {
 		socket,
-		setMessageRead,
 		setMessagesPush,
 		setSocket,
 		setSocketStatus,
