@@ -247,9 +247,7 @@ heroku login -i
           this.chatMsgBox.wrappedInstance.handleBoxClick();
 
           // jsx
-          <ChatMsgBox
-					  ref={(ref: any) => (this.chatMsgBox = ref)}
-				  />
+          <ChatMsgBox ref={(ref: any) => (this.chatMsgBox = ref)} />
         ```
 
 
