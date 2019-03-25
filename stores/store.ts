@@ -33,7 +33,8 @@ const store = types
 	.views((self) => ({
 		/** 모달을 보여줘야할지 여부 */
 		get getModalVisible() {
-			return self.userCollectionModel.currentUser.uniqueId ? false : true;
+			// return self.userCollectionModel.currentUser.uniqueId ? false : true;
+			return self.socketModel.status !== 'success';
 		}
 	}));
 

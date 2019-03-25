@@ -19,12 +19,15 @@ const model = types
 	})
 	.actions((self) => ({
 		/** 현재 접속한 유저정보 set  */
-		setCurrentUser(currentNickName) {
+		setCurrentUser(currentNickName, currentNickId, currentUniqueId) {
 			// 닉네임 set
 			self.currentUser.nickName = currentNickName;
 
 			// 닉ID set
-			self.currentUser.nickId = Math.floor(Math.random() * 50).toString();
+			self.currentUser.nickId = currentNickId;
+
+			// 소켓 ID set
+			self.currentUser.uniqueId = currentUniqueId;
 		},
 		/** 1:1 채팅할 상대 uniqueId set */
 		setActiveUniqueId(uniqueId: string) {
@@ -65,6 +68,12 @@ const model = types
 		/** 초기화 */
 		setInit() {
 			applySnapshot(self, defaultValue);
+		}
+	}))
+	.views((self) => ({
+		/** 랜덤ID 생성 */
+		getRandomId() {
+			return Math.floor(Math.random() * 50).toString();
 		}
 	}));
 

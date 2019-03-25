@@ -24,6 +24,9 @@ const model = types
 		/** 현재 접속자의 소켓명 */
 		socketName: types.string,
 
+		/** 소켓 연결상태: ready, pending, success, fail */
+		status: types.string,
+
 		/** 접속자들정보 collection ref */
 		userCollection: types.optional(
 			types.reference(userCollectionStore.model),
@@ -34,6 +37,10 @@ const model = types
 		/** 접속 소켓을 상태값에 넣어주기  */
 		setSocket(socket) {
 			self.socket = socket;
+		},
+		/** 소켓 커넥션 시도시에 상태값 변경 */
+		setSocketStatus(status: string) {
+			self.status = status;
 		},
 		/** 주고 받은 메시지들 push */
 		setMessagesPush(messageModel: IMessageModelType) {
@@ -135,7 +142,8 @@ const defaultValue = {
 	messages: [],
 	modalVisible: false,
 	socket: null,
-	socketName: ''
+	socketName: '',
+	status: 'ready'
 	/** 레퍼런스트입이므로 default 안함 */
 	// userCollection: { ...userCollectionStore.defaultValue }
 };

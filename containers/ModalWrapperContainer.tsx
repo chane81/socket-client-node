@@ -21,33 +21,38 @@ const ModalWrapperContainer: React.FC<IProps> = ({ store }) => {
 		socket,
 		setMessageRead,
 		setMessagesPush,
-		setSocket
+		setSocket,
+		setSocketStatus,
+		status
 	} = store!.socketModel;
 
 	const {
 		activeUniqueId,
+		getRandomId,
 		setUserIn,
 		setUserOut,
 		setCurrentUser,
-		setCurrentUniqueId,
 		currentUser
 	} = store!.userCollectionModel;
 
 	const handleNickRegist = (nickName) => {
-		// 접속유저정보 상태에 등록
-		setCurrentUser(nickName);
+		// 소켓 pending 상태로 변경
+		setSocketStatus('pending');
 
-		if (socket == null) {
+		// 임시 닉ID 발급
+		const nickId = getRandomId();
+
+		if (socket === null) {
 			// json 객체의 크기 축소, 바이너리 전송을 위해 message pack 적용
 			// 일반 json 데이터 전송보다 빠름
 			const socketIo = io(config.socketServerHost, {
 				parser: msgpackParser,
 				query: {
-					nickId: currentUser.nickId,
+					nickId,
 					nickName,
 					socketName: 'web'
 				},
-				secure: true,
+				reconnection: false,
 				transports: [ 'websocket', 'polling' ]
 			});
 
@@ -57,7 +62,11 @@ const ModalWrapperContainer: React.FC<IProps> = ({ store }) => {
 				setSocket(socketIo);
 
 				// 접속유저의 uniqueId 등록
-				setCurrentUniqueId(socketIo.id);
+				setCurrentUser(nickName, nickId, socketIo.id);
+
+				console.log('connect');
+				// 소켓 상태값 변경
+				setSocketStatus('success');
 			});
 
 			// 서버에서 메시지 받았을 때
@@ -133,11 +142,17 @@ const ModalWrapperContainer: React.FC<IProps> = ({ store }) => {
 
 			// 커넥션 에러
 			socketIo.on('connect_error', () => {
+				setSocketStatus('fail');
+
+				alert('연결에 실패하였습니다.');
+
 				console.log('connect_error');
 			});
 
 			// 커넥션 끊겼을 때
 			socketIo.on('disconnect', () => {
+				setSocketStatus('fail');
+
 				console.log('서버 disconnected!');
 			});
 		}
@@ -147,6 +162,7 @@ const ModalWrapperContainer: React.FC<IProps> = ({ store }) => {
 		<ModalWrapper
 			isVisible={getModalVisible}
 			handleNickRegist={handleNickRegist}
+			status={status}
 		/>
 	);
 };

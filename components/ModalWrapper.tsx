@@ -1,11 +1,13 @@
 import classNames from 'classnames/bind';
 import React, { Component, createRef } from 'react';
 import styles from '../styles/ModalWrapper.scss';
+import Loading from './Loading';
 
 const cx = classNames.bind(styles);
 
 interface IProps {
 	isVisible: boolean;
+	status: string;
 	handleNickRegist: (nickName: string) => void;
 }
 
@@ -34,13 +36,16 @@ class ModalWrapper extends Component<IProps> {
 	};
 
 	public render() {
+		console.log('status:', this.props.status);
 		return (
 			<div
 				className={cx('root-modal-wrapper', {
-					hide: !this.props.isVisible
+					hide: this.props.status === 'success'
 				})}
 			>
 				<div />
+				{this.props.status === 'pending' && <Loading isBgShow={false} />}
+				{/* <Loading isBgShow={false} /> */}
 				<div className='nicknm-wrapper'>
 					<div className='nicknm-modal'>
 						<div className='nicknm-input-container' onClick={this.handleFocus}>
