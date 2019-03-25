@@ -118,7 +118,7 @@ const model = types
 					JSON.stringify(self.currentMessage)
 				);
 
-				console.log('소켓 send:', JSON.stringify(self.currentMessage));
+				// console.log('소켓 send:', JSON.stringify(self.currentMessage));
 
 				// 메시지를 store에 push
 				(self as any).setMessagesPush(_.cloneDeep(self.currentMessage));

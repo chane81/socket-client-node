@@ -9,7 +9,6 @@ interface IProps {
 }
 
 const Loading: React.FC<IProps> = (props: IProps) => {
-	console.log('bgShow', props.isBgShow);
 	return (
 		<div className={cx('Loading', { 'bg-show': props.isBgShow })}>
 			<img src='/static/images/loading.gif' alt='loading' />

@@ -36,7 +36,6 @@ class ModalWrapper extends Component<IProps> {
 	};
 
 	public render() {
-		console.log('status:', this.props.status);
 		return (
 			<div
 				className={cx('root-modal-wrapper', {

@@ -53,6 +53,9 @@ heroku login -i
 - heroku ps:scale web=1
 
 ## 배포
+- next.js 의 export
+  - next build 로 빌드한 파일들이 생성되면 next export 로 정적페이지를 생성할 수 있다.
+
 - package.json
   - start 시에 `server.js 를 쓰지 않을 경우` 아래와 같이 하고 heroku 에 배포
     ```json

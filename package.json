@@ -4,7 +4,7 @@
 	"scripts": {
 		"dev": "next",
 		"start:dev": "node server.js",
-		"build": "next build && next export",
+		"build": "next build && next export -o dist",
 		"start": "next start -p $PORT",
 		"tslint": "tslint -c tslint.json -p tsconfig.json",
 		"heroku-postbuild": "next build"

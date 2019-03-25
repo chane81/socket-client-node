@@ -64,14 +64,13 @@ const ModalWrapperContainer: React.FC<IProps> = ({ store }) => {
 				// 접속유저의 uniqueId 등록
 				setCurrentUser(nickName, nickId, socketIo.id);
 
-				console.log('connect');
 				// 소켓 상태값 변경
 				setSocketStatus('success');
 			});
 
 			// 서버에서 메시지 받았을 때
 			socketIo.on('client.msg.receive', (context) => {
-				console.log('받은메시지:', context);
+				// console.log('받은메시지:', context);
 
 				const receiveMsg = JSON.parse(context);
 
@@ -110,7 +109,7 @@ const ModalWrapperContainer: React.FC<IProps> = ({ store }) => {
 
 			// 사용자가 처음 접속시에 현재 접속한 유저들정보를 가져온다.
 			socketIo.on('client.current.users', (context) => {
-				console.log('client.current.users', context);
+				// console.log('client.current.users', context);
 
 				const reqUsersData = JSON.parse(context);
 
