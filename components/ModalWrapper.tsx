@@ -44,7 +44,6 @@ class ModalWrapper extends Component<IProps> {
 			>
 				<div />
 				{this.props.status === 'pending' && <Loading isBgShow={false} />}
-				{/* <Loading isBgShow={false} /> */}
 				<div className='nicknm-wrapper'>
 					<div className='nicknm-modal'>
 						<div className='nicknm-input-container' onClick={this.handleFocus}>

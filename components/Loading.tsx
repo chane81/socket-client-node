@@ -11,7 +11,7 @@ interface IProps {
 const Loading: React.FC<IProps> = (props: IProps) => {
 	return (
 		<div className={cx('Loading', { 'bg-show': props.isBgShow })}>
-			<img src='/static/images/loading.gif' alt='loading' />
+			<i className='fas fa-circle-notch fa-spin fa-4x' />
 		</div>
 	);
 };
