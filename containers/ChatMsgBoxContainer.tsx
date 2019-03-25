@@ -72,7 +72,6 @@ class ChatMsgBoxContainer extends Component<IProps> {
 			isRead: false,
 			isSelf: true,
 			message: currentMessage,
-			msgFromUniqueId: userCollectionModel.currentUser.uniqueId,
 			msgToUniqueId: userCollectionModel.activeUniqueId,
 			user: { ...userCollectionModel.currentUser }
 		};
@@ -88,7 +87,7 @@ class ChatMsgBoxContainer extends Component<IProps> {
 			socketModel.messages,
 			(data: IMessageModelType) => {
 				const to = data.msgToUniqueId;
-				const from = data.msgFromUniqueId;
+				const from = data.user.uniqueId;
 				const curId = userCollectionModel.currentUser.uniqueId;
 				const activeId = userCollectionModel.activeUniqueId;
 
