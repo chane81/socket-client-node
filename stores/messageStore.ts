@@ -9,9 +9,6 @@ const model = types.model('messageModel', {
 	/** 메시지 읽었는지여부 true/false */
 	isRead: types.boolean,
 
-	/** 메시지 보내는이 uniqueId */
-	msgFromUniqueId: types.string,
-
 	/** 메시지  받는이 uniqueId */
 	msgToUniqueId: types.string,
 
@@ -26,7 +23,6 @@ const defaultValue = {
 	isRead: false,
 	isSelf: false,
 	message: '',
-	msgFromUniqueId: '',
 	msgToUniqueId: '',
 	user: userStore.defaultValue
 };

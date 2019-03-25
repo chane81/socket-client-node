@@ -47,7 +47,7 @@ const model = types
 		setMessagesPush(messageModel: IMessageModelType) {
 			const pushMessage = { ...messageModel };
 			const activeId = self.userCollection.activeUniqueId;
-			const fromId = pushMessage.msgFromUniqueId;
+			const fromId = pushMessage.user.uniqueId;
 			const toId = pushMessage.msgToUniqueId;
 			const isSelf = messageModel.isSelf;
 			let isRead: boolean = false;
