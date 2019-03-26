@@ -22,7 +22,8 @@ const ModalWrapperContainer: React.FC<IProps> = ({ store }) => {
 		setMessagesPush,
 		setSocket,
 		setSocketStatus,
-		status
+		status,
+		setInit
 	} = store!.socketModel;
 
 	const {
@@ -88,7 +89,6 @@ const ModalWrapperContainer: React.FC<IProps> = ({ store }) => {
 					isRead: activeUniqueId === '',
 					isSelf: false,
 					message: user.nickName + '(이)가 접속 하였습니다.',
-					msgFromUniqueId: '',
 					msgToUniqueId: '',
 					user: { ...user }
 				};
@@ -125,7 +125,6 @@ const ModalWrapperContainer: React.FC<IProps> = ({ store }) => {
 					isRead: activeUniqueId === '',
 					isSelf: false,
 					message: user.nickName + '(이)가 퇴장 하였습니다.',
-					msgFromUniqueId: '',
 					msgToUniqueId: '',
 					user: { ...user }
 				};
@@ -143,12 +142,18 @@ const ModalWrapperContainer: React.FC<IProps> = ({ store }) => {
 
 				alert('연결에 실패하였습니다.');
 
+				// 초기화
+				setInit();
+
 				console.log('connect_error');
 			});
 
 			// 커넥션 끊겼을 때
 			socketIo.on('disconnect', () => {
 				setSocketStatus('fail');
+
+				// 초기화
+				setInit();
 
 				console.log('서버 disconnected!');
 			});
