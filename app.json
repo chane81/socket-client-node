@@ -1,0 +1,27 @@
+{
+  "addons": [
+
+  ],
+  "buildpacks": [
+    {
+      "url": "heroku/nodejs"
+    }
+  ],
+  "env": {
+    "PROD_JWT_PRIVATE_KEY": {
+      "required": true
+    },
+    "PROD_SOCKET_SERVER_HOST": {
+      "required": true
+    }
+  },
+  "formation": {
+    "web": {
+      "quantity": 1
+    }
+  },
+  "name": "socket-client-node",
+  "scripts": {
+  },
+  "stack": "heroku-18"
+}
