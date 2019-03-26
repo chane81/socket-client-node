@@ -26,7 +26,7 @@ const ChatPiece: React.FC<IProps> = (props: IProps) => {
 				<div>
 					<span>
 						<div dangerouslySetInnerHTML={{ __html: msg }} />
-						<div className={'chat-nick'}>[ {nickName} ]</div>
+						<div className={'chat-nick'}>- {nickName} -</div>
 					</span>
 				</div>
 			</div>
