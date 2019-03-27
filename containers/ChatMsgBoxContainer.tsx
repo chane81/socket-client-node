@@ -47,9 +47,6 @@ class ChatMsgBoxContainer extends Component<IProps> {
 	public handleSignout = () => {
 		const { socketModel, userCollectionModel } = this.props.store!;
 
-		// 소캣닫기
-		socketModel.setSocketClose();
-
 		// 소캣 스토어 초기화
 		socketModel.setInit();
 		userCollectionModel.setInit();
