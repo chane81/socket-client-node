@@ -28,9 +28,9 @@ withTypescript(
 
             if (
               entries['main.js'] &&
-              !entries['main.js'].includes('./polyfills.js')
+              !entries['main.js'].includes('./config/polyfills.js')
             ) {
-              entries['main.js'].unshift('./polyfills.js');
+              entries['main.js'].unshift('./config/polyfills.js');
             }
 
             return entries
