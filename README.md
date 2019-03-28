@@ -41,22 +41,20 @@
   - packace.json 에 아래와 같이 jest config 를 추가 한다.
     ```json
       "jest": {
-          "moduleFileExtensions": [
-            "ts",
-            "tsx",
-            "js"
-          ],
-          "globals": {
-            "ts-jest": {
-              "babelConfig": true
-            }
-          },
-          "moduleNameMapper": {
-            "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/mocks.js",
-            "\\.(css|less|scss)$": "<rootDir>/__mocks__/mocks.js"
-          },
-          "testPathIgnorePatterns": [ "<rootDir>/.next/", "<rootDir>/node_modules/" ],
-        }
+        "verbose": true,
+        "moduleFileExtensions": [ "ts", "tsx", "js" ],
+        "globals": {
+          "ts-jest": {
+            "babelConfig": true
+          }
+        },
+        "moduleNameMapper": {
+          "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/mocks.js",
+          "\\.(css|less|scss)$": "<rootDir>/__mocks__/mocks.js"
+        },
+        "testPathIgnorePatterns": [ "<rootDir>/.next/", "<rootDir>/node_modules/" ],
+        "snapshotResolver": "<rootDir>/config/snapshotResolver.js"
+      }
     ```
   - 참고
   - 'react-testing-library/cleanup-after-each'; 는 각 테스트 마다 render 했던 객체들을 파기시키기 때문에 전역으로 render 해서 쓰는 변수가 있다면 선언하지 않고 쓰면 된다.
@@ -66,21 +64,24 @@
       yarn add jest jest-dom enzyme enzyme-adapter-react-16 @types/enzyme @types/enzyme-adapter-react-16 @types/jest --dev
     ```
   - packace.json 에 아래와 같이 jest config 를 추가 한다. 위와 틀린건 `"setupFiles"`부분 이다.
+    - jest.setup.js 에 enzyme 를 사용하기 위한 설정이 들어가기 때문
     ```json
       "jest": {
-      "moduleFileExtensions": [ "ts", "tsx", "js" ],
-      "globals": {
-        "ts-jest": {
-          "babelConfig": true
-        }
-      },
-      "moduleNameMapper": {
-        "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/mocks.js",
-        "\\.(css|less|scss)$": "<rootDir>/__mocks__/mocks.js"
-      },
-      "testPathIgnorePatterns": [ "<rootDir>/.next/", "<rootDir>/node_modules/" ],
-      "setupFiles": [ "<rootDir>/config/jest.setup.js" ]
-    }
+        "verbose": true,
+        "moduleFileExtensions": [ "ts", "tsx", "js" ],
+        "globals": {
+          "ts-jest": {
+            "babelConfig": true
+          }
+        },
+        "moduleNameMapper": {
+          "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/mocks.js",
+          "\\.(css|less|scss)$": "<rootDir>/__mocks__/mocks.js"
+        },
+        "testPathIgnorePatterns": [ "<rootDir>/.next/", "<rootDir>/node_modules/" ],
+        "snapshotResolver": "<rootDir>/config/snapshotResolver.js",
+        "setupFiles": [ "<rootDir>/config/jest.setup.js" ]
+      }
     ```
   - config 폴더에 `jest.setup.js` 파일을 추가하고 아래 내용을 기입한다.
     ```js
@@ -90,16 +91,40 @@
       configure({ adapter: new Adapter() })
     ```
 ### jest 테스팅 스크립트 부분(package.json)
-  - `--verbose` 옵션을 주면 테스팅 `디스크립션`도 표시해준다.
-  ```json
-    "scripts": {
-      ...
-      "test": "jest --verbose",
-      "test:watch": "jest --watch",
-      "test:coverage": "jest --coverage",
-      ...
-    }
-  ```
+  - `--verbose` 옵션을 주면 테스팅 `디스크립션`도 표시해준다.(또는 package.json 설정에서 `"verbose": true` 를 넣어줘도 된다.)
+    ```json
+      "scripts": {
+        ...
+        "test": "jest --verbose",
+        "test:watch": "jest --watch",
+        "test:coverage": "jest --coverage",
+        ...
+      }
+    ```
+### snapshot 파일 디렉토리 경로 설정
+  - 스냅샷 경로에 대해서 최상위 경로의 "__snapshots__" 폴더에 파일이 들어가게 위한 설정
+  - package.json 의 jest 설정부분에 아래 설정 추가
+    ```json
+      "jest": {
+        ...
+        "snapshotResolver": "<rootDir>/config/snapshotResolver.js"
+        ...
+      }
+    ```
+  - config 폴더에 snapshotResolver.js 를 생성하고 아래 내용 추가
+    ```js
+      module.exports = {
+        resolveSnapshotPath: (testPath, snapshotExtension) =>
+          testPath.replace('__tests__', '__snapshots__') + snapshotExtension,
+
+        resolveTestPath: (snapshotFilePath, snapshotExtension) =>
+          snapshotFilePath
+            .replace('__snapshots__', '__tests__')
+            .slice(0, -snapshotExtension.length),
+
+        testPathForConsistencyCheck: '_/__tests__/_.test.js',
+      };
+    ```
 
 ### enzyme의 mount vs shallow
   - mount

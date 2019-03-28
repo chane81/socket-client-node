@@ -6,7 +6,7 @@
 		"start:dev": "node server.js",
 		"build": "next build && next export -o dist",
 		"start": "next start -p $PORT",
-		"test": "jest --verbose",
+		"test": "jest --updateSnapshot",
 		"test:watch": "jest --watch",
 		"test:coverage": "jest --coverage",
 		"tslint": "tslint -c tslint.json -p tsconfig.json",
@@ -80,6 +80,7 @@
 		]
 	},
 	"jest": {
+		"verbose": true,
 		"moduleFileExtensions": [ "ts", "tsx", "js" ],
 		"globals": {
 			"ts-jest": {
@@ -91,6 +92,7 @@
 			"\\.(css|less|scss)$": "<rootDir>/__mocks__/mocks.js"
 		},
 		"testPathIgnorePatterns": [ "<rootDir>/.next/", "<rootDir>/node_modules/" ],
+		"snapshotResolver": "<rootDir>/config/snapshotResolver.js",
 		"setupFiles": [ "<rootDir>/config/jest.setup.js" ]
 	}
 }
