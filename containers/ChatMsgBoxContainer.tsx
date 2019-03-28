@@ -19,18 +19,8 @@ class ChatMsgBoxContainer extends Component<IProps> {
 
 		// mst action 이벤트 핸들러
 		onAction(store, (action) => {
-			if (action.name === 'setCurrentNickName') {
+			if (action.name === 'setCurrentUser') {
 				console.log('mst onAction:', action);
-			}
-		});
-
-		// mst patch 이벤트 핸들러
-		onPatch(store, (patch) => {
-			if (
-				patch.op === 'replace' &&
-				patch.path.indexOf('currentNickName') !== -1
-			) {
-				console.log('mst onPatch:', patch);
 
 				// 닉네임 입력 모달창 닫았을 때 input 입력박스로 focus 이동
 				// 컴포넌트가 mobx inject로 감싸진 경우에 wrappedInstance 로 써야함
@@ -41,6 +31,13 @@ class ChatMsgBoxContainer extends Component<IProps> {
 				});
 			}
 		});
+
+		// mst patch 이벤트 핸들러
+		// onPatch(store, (patch) => {
+		// if (patch.op === 'replace' && patch.path.indexOf('nickName') !== -1) {
+		// 	console.log('mst onPatch:', patch);
+		// }
+		// });
 	}
 
 	// 나가기 클릭시
