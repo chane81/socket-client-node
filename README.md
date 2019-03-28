@@ -353,9 +353,15 @@ heroku login -i
           // jsx
           <ChatMsgBox ref={(ref: any) => (this.chatMsgBox = ref)} />
         ```
-
-
-
+- react-testing-library - 실서버 배포시에 생기는 오류
+  - heroku 에 배포시에 빌드 성공은 하였으나 페이지 접속시 아래와 같은 에러가 발생하였다.
+  - 로컬환경에서는 잘 돌아감
+    ```
+    Error: Cannot find module '@babel/runtime/regenerator'
+    ```
+    ![](/static/images/screen3.png)
+  - `해결방법`
+    - react-testing-library 을 devDependencies -> dependencies 옮기면 에러가 나지 않는다.
 
 
 
