@@ -63,5 +63,8 @@
   "liveServer.settings.donotShowInfoMsg": true,
   "liveServer.settings.donotVerifyTags": true,
   "sync.gist": "22d8153e6726882b514d8cab04b44d44",
-  "javascript.updateImportsOnFileMove.enabled": "always"
+  "javascript.updateImportsOnFileMove.enabled": "always",
+
+  // tslint config 파일 path
+  "tslint.configFile": "./config/tslint.json"
 }
