@@ -38,7 +38,7 @@
     ```
       yarn add jest jest-dom react-testing-library @types/jest --dev
     ```
-  - packace.json 에 아래와 같이 jest config 를 추가 한다.
+  - package.json 에 아래와 같이 jest config 를 추가 한다.
     ```json
       "jest": {
         "verbose": true,
@@ -63,7 +63,7 @@
     ```
       yarn add jest jest-dom enzyme enzyme-adapter-react-16 @types/enzyme @types/enzyme-adapter-react-16 @types/jest --dev
     ```
-  - packace.json 에 아래와 같이 jest config 를 추가 한다. 위와 틀린건 `"setupFiles"`부분 이다.
+  - package.json 에 아래와 같이 jest config 를 추가 한다. 위와 틀린건 `"setupFiles"`부분 이다.
     - jest.setup.js 에 enzyme 를 사용하기 위한 설정이 들어가기 때문
     ```json
       "jest": {
