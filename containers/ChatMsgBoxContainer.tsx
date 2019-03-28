@@ -26,10 +26,7 @@ class ChatMsgBoxContainer extends Component<IProps> {
 
 		// mst patch 이벤트 핸들러
 		onPatch(store, (patch) => {
-			if (
-				patch.op === 'replace' &&
-				patch.path.indexOf('currentNickName') !== -1
-			) {
+			if (patch.op === 'replace' && patch.path.indexOf('nickName') !== -1) {
 				console.log('mst onPatch:', patch);
 
 				// 닉네임 입력 모달창 닫았을 때 input 입력박스로 focus 이동
