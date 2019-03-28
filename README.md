@@ -36,7 +36,8 @@
 ### `jest + react-testing-library` 를 쓸 경우
   - yarn 설치
     ```
-      yarn add jest jest-dom react-testing-library @types/jest --dev
+      yarn add react-testing-library
+      yarn add jest jest-dom @types/jest --dev
     ```
   - package.json 에 아래와 같이 jest config 를 추가 한다.
     ```json
