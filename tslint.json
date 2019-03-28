@@ -68,7 +68,8 @@
       "next.config.js",
       "*.js",
       "*.scss",
-      "*.css"
+      "*.css",
+      "**/__tests__/**/*"
     ]
   }
 }

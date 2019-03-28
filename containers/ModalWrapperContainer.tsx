@@ -3,7 +3,7 @@ import React from 'react';
 import io from 'socket.io-client';
 import msgpackParser from 'socket.io-msgpack-parser';
 import ModalWrapper from '../components/ModalWrapper';
-import config from '../config.js';
+import config from '../config/config';
 import {
 	IMessageModelType,
 	IStore,

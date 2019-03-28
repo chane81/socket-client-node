@@ -12,10 +12,13 @@ const ChatPiece: React.FC<IProps> = (props: IProps) => {
 	const { nickName } = user;
 
 	// 줄바꿈을 <br /> 로 치환
-	const msg = message.replace(/(?:\r\n|\r|\n)/g, '<br />');
+	const msg = message.replace(/(?:\r\n|\r|\n)/g, '<br>');
 
 	return (
-		<div className={`root-chat-piece ${isSelf ? 'chat-right' : 'chat-left'}`}>
+		<div
+			data-testid='t-root-class'
+			className={`root-chat-piece ${isSelf ? 'chat-right' : 'chat-left'}`}
+		>
 			<div className={'chat-msg'}>
 				<UserPicture
 					userModel={user}
@@ -25,8 +28,13 @@ const ChatPiece: React.FC<IProps> = (props: IProps) => {
 				/>
 				<div>
 					<span>
-						<div dangerouslySetInnerHTML={{ __html: msg }} />
-						<div className={'chat-nick'}>- {nickName} -</div>
+						<div
+							data-testid='t-msg'
+							dangerouslySetInnerHTML={{ __html: msg }}
+						/>
+						<div data-testid='t-nick-name' className={'chat-nick'}>
+							- {nickName} -
+						</div>
 					</span>
 				</div>
 			</div>
