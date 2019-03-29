@@ -1,34 +1,34 @@
 # 소켓전송 클라이언트
 
 ## `구성`
-- user interface library
-  > react.js
-  
-  > next.js (ssr)
+  - user interface library
+    > react.js
+    
+    > next.js (ssr)
 
-- type check compiler
-  > typescript
+  - type check compiler
+    > typescript
 
-- linter
-  > tslint
+  - linter
+    > tslint
 
-- style
-  > scss
+  - style
+    > scss
 
-- deploy
-  > heroku
+  - deploy
+    > heroku
 
-- source controller
-  > git
-  
-  > heroku git
+  - source controller
+    > git
+    
+    > heroku git
 
-- test
-  > react-testing-library
-  > jest
+  - test
+    > react-testing-library
+    > jest
 
-- code 리팩토링 관련툴
-  > https://www.codefactor.io/repository/github/chane81/socket-client-node
+  - code 리팩토링 관련툴
+    > https://www.codefactor.io/repository/github/chane81/socket-client-node
 
 
 ## `testing 관련`
