@@ -50,8 +50,6 @@ const ModalWrapperContainer: React.FC<IProps> = ({ store }) => {
 				socketName: 'web'
 			});
 
-			console.log('token:', tokenString);
-
 			// json 객체의 크기 축소, 바이너리 전송을 위해 message pack 적용
 			// 일반 json 데이터 전송보다 빠름
 			const socketIo = io(config.socketServerHost, {
