@@ -1,38 +1,38 @@
 # 소켓전송 클라이언트
 
-## `구성`
-  - user interface library
-    > react.js
-    
-    > next.js (ssr)
+# `구성`
+- user interface library
+  > react.js
+  
+  > next.js (ssr)
 
-  - type check compiler
-    > typescript
+- type check compiler
+  > typescript
 
-  - linter
-    > tslint
+- linter
+  > tslint
 
-  - style
-    > scss
+- style
+  > scss
 
-  - deploy
-    > heroku
+- deploy
+  > heroku
 
-  - source controller
-    > git
-    
-    > heroku git
+- source controller
+  > git
+  
+  > heroku git
 
-  - test
-    > react-testing-library
-    > jest
+- test
+  > react-testing-library
+  > jest
 
-  - code 리팩토링 관련툴
-    > https://www.codefactor.io/repository/github/chane81/socket-client-node
+- code 리팩토링 관련툴
+  > https://www.codefactor.io/repository/github/chane81/socket-client-node
 
 
-## `testing 관련`
-- `jest + react-testing-library` 를 쓸 경우
+# `testing 관련`
+- ## `jest + react-testing-library` 를 쓸 경우
   - yarn 설치
     ```
       yarn add jest jest-dom react-testing-library @types/jest --dev
@@ -57,7 +57,7 @@
     ```
   - 참고
   - 'react-testing-library/cleanup-after-each'; 는 각 테스트 마다 render 했던 객체들을 파기시키기 때문에 전역으로 render 해서 쓰는 변수가 있다면 선언하지 않고 쓰면 된다.
-- `jest + enzyme`를 쓸 경우
+- ## `jest + enzyme`를 쓸 경우
   - yarn 설치
     ```
       yarn add jest jest-dom enzyme enzyme-adapter-react-16 @types/enzyme @types/enzyme-adapter-react-16 @types/jest --dev
@@ -130,9 +130,8 @@
     - 모든 라이프사이클 훅이 호출된다.
   - shallow
     - componentDidMount, componentDidUpdate 를 제외하고 라이프사이클 훅이 호출된다.
-***
 
-## `heroku`
+# `heroku`
 - ## heroku 명령어
   > 버전
     - heroku --version
@@ -184,9 +183,8 @@
     heroku logs -a socket-client-node -t
     ```
 
-***
 
-## `style 사용방식 참고`
+# `style 사용방식 참고`
 - ## styled component
   - yarn
     ```
@@ -246,9 +244,7 @@
     `}</style>
     ```
 
-***
-
-## `lint 관련`
+# `lint 관련`
 - ## tslint 와 prettier 충돌방지를 위한 plugin 설치
   - yarn
     ```
@@ -263,7 +259,7 @@
     ```
 
 
-## `개발이슈`
+# `개발이슈`
 - ## mobx 상태값을 remove 할 때 lodash의 remove(또는 pull) 를 썼는데 오류가 발생하였다.
   - lodash 의 remove 의 경우 replace 가 일어나고 해당 값 delete 가 일어나는 것을 patch 이벤트를 통해 확인이 되었다.
   - 방법은 findIndex 를 하여 idx 를 구한후 splice 를 쓰면 오류를 잡을 수 있었다.
@@ -385,10 +381,10 @@
       )
     }
   ```
-## `heroku 클라이언트 URL`
+# `heroku 클라이언트 URL`
 - https://socket-client-node.herokuapp.com/
 
-## `Screenshot`
+# `Screenshot`
 - 실행화면
 
   ![](/static/images/screen1.png)
