@@ -15,9 +15,18 @@ class ModalWrapper extends Component<IProps> {
 	private txtNickBox: any = createRef<HTMLInputElement>();
 
 	// 닉네임 등록
-	public handleClick = () => {
+	public handleClick = (e) => {
+		// 앞 뒤 공백 제거
+		const nickName = this.txtNickBox.current.value.replace(/^\s*|\s*$/g, '');
+
+		// 입력값 없으면 등록 X
+		if (!nickName) {
+			e.preventDefault();
+			return;
+		}
+
 		// store 에 닉네임 등록
-		this.props.handleNickRegist(this.txtNickBox.current.value);
+		this.props.handleNickRegist(nickName);
 
 		// 닉네임 입력창은 초기화
 		this.txtNickBox.current.value = '';
@@ -26,7 +35,7 @@ class ModalWrapper extends Component<IProps> {
 	// 입력창에서 엔터키 눌렀을 때
 	public handleSendKeyPress = (e) => {
 		if (e.key === 'Enter') {
-			this.handleClick();
+			this.handleClick(e);
 		}
 	};
 
