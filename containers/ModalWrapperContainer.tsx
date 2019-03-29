@@ -4,6 +4,7 @@ import io from 'socket.io-client';
 import msgpackParser from 'socket.io-msgpack-parser';
 import ModalWrapper from '../components/ModalWrapper';
 import config from '../config/config';
+import jwtHelper from '../library/jwtHelper';
 import {
 	IMessageModelType,
 	IStore,
@@ -43,14 +44,20 @@ const ModalWrapperContainer: React.FC<IProps> = ({ store }) => {
 		const nickId = getRandomId();
 
 		if (socket === null) {
+			const tokenString = jwtHelper.setTokenSign({
+				nickId,
+				nickName,
+				socketName: 'web'
+			});
+
+			console.log('token:', tokenString);
+
 			// json 객체의 크기 축소, 바이너리 전송을 위해 message pack 적용
 			// 일반 json 데이터 전송보다 빠름
 			const socketIo = io(config.socketServerHost, {
 				parser: msgpackParser,
 				query: {
-					nickId,
-					nickName,
-					socketName: 'web'
+					token: tokenString
 				},
 				reconnection: false,
 				transports: [ 'websocket', 'polling' ]
@@ -156,6 +163,23 @@ const ModalWrapperContainer: React.FC<IProps> = ({ store }) => {
 				setInit();
 
 				console.log('서버 disconnected!');
+			});
+
+			// 소켓 일반 error
+			socketIo.on('error', (err) => {
+				setSocketStatus('fail');
+
+				const msg =
+					err === 'AUTH_ERROR'
+						? '잘못된 방식으로 접근하였습니다.\r\n미인증 토큰입니다.'
+						: '에러가 발생하였습니다.';
+
+				alert(msg);
+
+				// 초기화
+				setInit();
+
+				console.log('error', err);
 			});
 		}
 	};

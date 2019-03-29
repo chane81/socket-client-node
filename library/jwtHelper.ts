@@ -55,4 +55,4 @@ const getTokenVerify = (token: string) => {
 // 쿠키로 저장한 토큰 가져오기
 const getToken: any = () => getCookie('token');
 
-export { getToken, getTokenVerify, setTokenSign };
+export default { getToken, getTokenVerify, setTokenSign };
