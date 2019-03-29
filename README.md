@@ -30,10 +30,9 @@
 - code 리팩토링 관련툴
   > https://www.codefactor.io/repository/github/chane81/socket-client-node
 
-***
 
 ## `testing 관련`
-- ## `jest + react-testing-library` 를 쓸 경우
+- `jest + react-testing-library` 를 쓸 경우
   - yarn 설치
     ```
       yarn add jest jest-dom react-testing-library @types/jest --dev
@@ -58,7 +57,7 @@
     ```
   - 참고
   - 'react-testing-library/cleanup-after-each'; 는 각 테스트 마다 render 했던 객체들을 파기시키기 때문에 전역으로 render 해서 쓰는 변수가 있다면 선언하지 않고 쓰면 된다.
-- ## `jest + enzyme`를 쓸 경우
+- `jest + enzyme`를 쓸 경우
   - yarn 설치
     ```
       yarn add jest jest-dom enzyme enzyme-adapter-react-16 @types/enzyme @types/enzyme-adapter-react-16 @types/jest --dev
