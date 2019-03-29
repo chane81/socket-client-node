@@ -44,7 +44,8 @@ const ModalWrapperContainer: React.FC<IProps> = ({ store }) => {
 		const nickId = getRandomId();
 
 		if (socket === null) {
-			const tokenString = jwtHelper.setTokenSign({
+			// 토큰발급
+			const token = jwtHelper.setTokenSign({
 				nickId,
 				nickName,
 				socketName: 'web'
@@ -55,7 +56,7 @@ const ModalWrapperContainer: React.FC<IProps> = ({ store }) => {
 			const socketIo = io(config.socketServerHost, {
 				parser: msgpackParser,
 				query: {
-					token: tokenString
+					token
 				},
 				reconnection: false,
 				transports: [ 'websocket', 'polling' ]
