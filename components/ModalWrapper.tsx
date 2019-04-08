@@ -48,7 +48,8 @@ class ModalWrapper extends Component<IProps> {
 		return (
 			<div
 				className={cx('root-modal-wrapper', {
-					hide: this.props.status === 'success'
+					hide: this.props.status === 'success',
+					show: this.props.status !== 'success'
 				})}
 			>
 				<div />

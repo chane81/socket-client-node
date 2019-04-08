@@ -2,7 +2,28 @@
 
 .root-modal-wrapper {
 	&.hide {
-		display: none;
+		> div {
+			visibility: hidden;
+			opacity: 0;
+		}
+
+		.nicknm-wrapper {
+			top: 200%;
+			transform: translate(-50%, -50%);
+		}
+	}
+
+	&.show {
+		> div {
+			visibility: visible;
+			opacity: 1;
+		}
+
+		// 센터로 가게
+		.nicknm-wrapper {
+			top: 50%;
+			transform: translate(-50%, -50%);
+		}
 	}
 
 	> div {
@@ -13,14 +34,13 @@
 		right: 0;
 		bottom: 0;
 		z-index: 5;
+		transition: opacity 800ms linear, visibility 800ms linear;
 	}
 
 	.nicknm-wrapper {
 		z-index: 30;
 		position: fixed;
-		top: 50%;
 		left: 50%;
-		transform: translate(-50%, -50%);
 		width: 70%;
 		background: #7950f2;
 		height: 30%;
@@ -30,6 +50,7 @@
 		align-items: center;
 		padding: 5px;
 		min-width: 18rem;
+		transition: top 800ms ease, opacity 800ms, visibility 800ms;
 
 		.nicknm-modal {
 			height: 100%;
