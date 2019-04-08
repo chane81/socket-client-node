@@ -45,6 +45,7 @@ class ChatMsgBoxContainer extends Component<IProps> {
 		const { socketModel, userCollectionModel } = this.props.store!;
 
 		// 소캣 스토어 초기화
+		socketModel.setSocketClose();
 		socketModel.setInit();
 		userCollectionModel.setInit();
 	};

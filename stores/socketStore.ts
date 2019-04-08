@@ -133,7 +133,6 @@ const model = types
 		}),
 		// 초기화
 		setInit() {
-			(self as any).setSocketClose();
 			applySnapshot(self, defaultValue);
 		}
 	}));
