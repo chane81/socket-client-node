@@ -25,7 +25,6 @@
       false,
       "next"
     ],
-    "no-unused-variable": [true, {"severity": "warning"}],
     "space-before-function-paren": false,
     "ter-indent": [true, "tab"],
     "typedef-whitespace": [
