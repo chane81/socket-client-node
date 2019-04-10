@@ -15,8 +15,6 @@ withTypescript(
 
           config.plugins = config.plugins || []
 
-          console.log('env:', env.stringified);
-
           config.plugins = [
             ...config.plugins,
 
