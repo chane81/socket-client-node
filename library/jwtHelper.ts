@@ -1,5 +1,4 @@
 import jwt from 'jsonwebtoken';
-import config from '../config/config.js';
 import { getCookie, setCookieDay } from './cookiesHelper';
 
 /*
@@ -16,7 +15,7 @@ import { getCookie, setCookieDay } from './cookiesHelper';
 */
 
 // 키
-const privateKey: string = config.jwtPrivateKey;
+const privateKey: string = process.env.JWT_PRIVATE_KEY || '';
 
 // 토큰 sign
 const setTokenSign = (payload: any): string => {
