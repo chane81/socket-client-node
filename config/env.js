@@ -18,11 +18,12 @@ function getClientConfig() {
 
   // 실행환경
 	// 'development' or 'production'
-	const nodeEnv = process.env.NODE_ENV || 'development';
+  const nodeEnv = process.env.NODE_ENV || 'development';
+  const raw = envVal[nodeEnv];
 
   // env 에 사용자 config 변수값 삽입
   const stringified = {
-    'process.env': Object.keys(envVal[nodeEnv]).reduce((env, key) => {
+    'process.env': Object.keys(raw).reduce((env, key) => {
       env[key] = JSON.stringify(raw[key]);
       return env;
     }, {}),
