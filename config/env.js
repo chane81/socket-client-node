@@ -22,7 +22,7 @@ function getClientConfig() {
     // 실서버환경 변수
 		production: {
 			SOCKET_SERVER_HOST: 'https://socket-server-node.herokuapp.com',
-			JWT_PRIVATE_KEY: 'black2284'
+			//JWT_PRIVATE_KEY: 'black2284'
 		}
 	};
 
@@ -34,7 +34,8 @@ function getClientConfig() {
   // env 에 사용자 config 변수값 삽입
   const stringified = getParse(raw);
 
-  console.log('stringified:', stringified);
+  // console.log('target:', process.env.npm_lifecycle_event);
+  // console.log('stringified:', stringified);
 
   return { raw, stringified };
 }
