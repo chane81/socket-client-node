@@ -10,7 +10,7 @@
 		"test:watch": "jest --watch",
 		"test:coverage": "jest --coverage",
 		"tslint": "tslint -c tslint.json -p tsconfig.json",
-		"heroku-postbuild": "next build"
+		"heroku-postbuild": "yarn build"
 	},
 	"dependencies": {
 		"@zeit/next-css": "^1.0.1",
@@ -74,10 +74,7 @@
 		"tslint-react": "^3.6.0"
 	},
 	"babel": {
-		"presets": [
-			"next/babel",
-			"@zeit/next-typescript/babel"
-		],
+		"presets": [ "next/babel", "@zeit/next-typescript/babel" ],
 		"plugins": [
 			[
 				"@babel/plugin-proposal-decorators",
@@ -95,11 +92,7 @@
 	},
 	"jest": {
 		"verbose": true,
-		"moduleFileExtensions": [
-			"ts",
-			"tsx",
-			"js"
-		],
+		"moduleFileExtensions": [ "ts", "tsx", "js" ],
 		"globals": {
 			"ts-jest": {
 				"babelConfig": true
@@ -109,13 +102,8 @@
 			"\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/mocks.js",
 			"\\.(css|less|scss)$": "<rootDir>/__mocks__/mocks.js"
 		},
-		"testPathIgnorePatterns": [
-			"<rootDir>/.next/",
-			"<rootDir>/node_modules/"
-		],
+		"testPathIgnorePatterns": [ "<rootDir>/.next/", "<rootDir>/node_modules/" ],
 		"snapshotResolver": "<rootDir>/config/snapshotResolver.js",
-		"setupFiles": [
-			"<rootDir>/config/jest.setup.js"
-		]
+		"setupFiles": [ "<rootDir>/config/jest.setup.js" ]
 	}
 }

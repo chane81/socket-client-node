@@ -3,16 +3,16 @@
  */
 
 function getParse(val) {
-  return Object.keys(val).reduce((env, key) => {
-    env[key] = JSON.stringify(val[key]);
-    return env;
-  }, {});
+  return Object.keys(val).reduce((env, key) => 
+    Object.assign({}, env, {
+      [`process.env.${key}`]: JSON.stringify(val[key])
+    }), {});
 }
 
 function getClientConfig() {
   const target = process.env.npm_lifecycle_event;
   process.env.NODE_ENV = target === 'build' ? 'production' : 'development';
-  
+
 	const envVal = {
     // 개발환경 변수
 		development: {
@@ -32,9 +32,9 @@ function getClientConfig() {
   const raw = envVal[nodeEnv];
 
   // env 에 사용자 config 변수값 삽입
-  const stringified = {
-    'process.env': `Object.assign(${JSON.stringify(raw)}, process.env)`
-  };
+  const stringified = getParse(raw);
+
+  console.log('stringified:', stringified);
 
   return { raw, stringified };
 }
