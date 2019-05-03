@@ -12,7 +12,7 @@ function getClientConfig() {
     // 실서버환경 변수
 		production: {
 			SOCKET_SERVER_HOST: 'https://socket-server-node.herokuapp.com',
-			JWT_PRIVATE_KEY: 'cloud99'
+			JWT_PRIVATE_KEY: 'black2284'
 		}
 	};
 
