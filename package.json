@@ -2,14 +2,16 @@
 	"name": "create-next-example-app",
 	"version": "2.0.0",
 	"scripts": {
+		"####### development mode": "",
 		"dev": "next",
-		"start:dev": "node server.js",
-		"build": "next build && next export -o dist",
-		"start": "next start -p $PORT",
 		"test": "jest --updateSnapshot",
 		"test:watch": "jest --watch",
 		"test:coverage": "jest --coverage",
 		"tslint": "tslint -c tslint.json -p tsconfig.json",
+
+		"####### product mode": "",
+		"build": "next build && next export -o dist",
+		"start": "next start -p $PORT",
 		"heroku-postbuild": "yarn build"
 	},
 	"dependencies": {
