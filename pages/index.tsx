@@ -1,7 +1,5 @@
 import { inject, observer } from 'mobx-react';
 import { Component } from 'react';
-import Head from '../components/Head';
-
 import ChatMsgBoxContainer from '../containers/ChatMsgBoxContainer';
 import ModalWrapperContainer from '../containers/ModalWrapperContainer';
 
@@ -18,7 +16,6 @@ class Index extends Component<IProps> {
 	public render() {
 		return (
 			<div>
-				<Head title='My Chat App' />
 				<ChatMsgBoxContainer />
 				<ModalWrapperContainer />
 			</div>

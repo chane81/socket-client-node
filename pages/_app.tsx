@@ -2,9 +2,9 @@ import { Provider } from 'mobx-react';
 import { getSnapshot } from 'mobx-state-tree';
 import { NextComponentType } from 'next';
 import App, { Container } from 'next/app';
-import Head from 'next/head';
 import { object } from 'prop-types';
 import React from 'react';
+import Head from '../components/Head';
 import { initializeStore, IStore } from '../stores/store';
 
 interface IProps {
@@ -55,9 +55,7 @@ export default class MyApp extends App<IProps> {
 		return (
 			<Provider store={this.store}>
 				<Container>
-					<Head>
-						<title />
-					</Head>
+					<Head title='My Chat App' />
 					<Component {...pageProps} />
 				</Container>
 			</Provider>
