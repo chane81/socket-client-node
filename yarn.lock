@@ -5733,15 +5733,15 @@ mkdirp-then@1.2.0:
   dependencies:
     minimist "0.0.8"
 
-mobx-devtools-mst@^0.9.18:
-  version "0.9.18"
-  resolved "https://registry.yarnpkg.com/mobx-devtools-mst/-/mobx-devtools-mst-0.9.18.tgz#ba515b15d05eb0a971a409a5fa587fffd3065dda"
-  integrity sha512-HlCcUuKr5aBDGUespXgvwPA9LP2T0dUyx/Ngan8SCF2ywrdB1m+Dz6QISRjUXAJM4Mk9wDyHcrljbxH2QVa0kQ==
+mobx-devtools-mst@^0.9.21:
+  version "0.9.21"
+  resolved "https://registry.yarnpkg.com/mobx-devtools-mst/-/mobx-devtools-mst-0.9.21.tgz#430c52131d82b7ef24281baaae64e552908afa91"
+  integrity sha512-eyGtucp9zXunzRjYZjXsaQ18/riOy8bdW2a14YIQ96ZPhLXXnR0zivIUyJ35ZC3o5Nd+kpUzqrm/8jCf8zjLyQ==
 
-mobx-react-devtools@^6.0.3:
-  version "6.0.3"
-  resolved "https://registry.yarnpkg.com/mobx-react-devtools/-/mobx-react-devtools-6.0.3.tgz#4d536c8cdd77d9f4b81f5e8415d7bedccc6a2a99"
-  integrity sha512-PY+lG6XeWaC0DFnDaVC7ImrHJQu7XVXNy4z4fmqHzWc3p+fJisKmaZNwgToO2vJGBghz98Mx2yXUBLw1Ba2mPQ==
+mobx-react-devtools@^6.1.1:
+  version "6.1.1"
+  resolved "https://registry.yarnpkg.com/mobx-react-devtools/-/mobx-react-devtools-6.1.1.tgz#a462b944085cf11ff96fc937d12bf31dab4c8984"
+  integrity sha512-nc5IXLdEUFLn3wZal65KF3/JFEFd+mbH4KTz/IG5BOPyw7jo8z29w/8qm7+wiCyqVfUIgJ1gL4+HVKmcXIOgqA==
 
 mobx-react@^5.4.3:
   version "5.4.3"
