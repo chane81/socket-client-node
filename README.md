@@ -31,7 +31,7 @@
   > https://www.codefactor.io/repository/github/chane81/socket-client-node
 
 
-# mobx 디버깅 관련
+# `mobx 디버깅 관련`
 - ## 디버깅 코드 심기
   - 콘솔에 mst 디버깅을 나타내기 위해서는 onPatch를 이용
   - 크롬 mst 도구에 디버깅을 나타내기 위해 makeInspectable 를 이용
