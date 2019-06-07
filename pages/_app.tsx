@@ -1,5 +1,6 @@
+import makeInspectable from 'mobx-devtools-mst';
 import { Provider } from 'mobx-react';
-import { getSnapshot } from 'mobx-state-tree';
+import { getSnapshot, onPatch } from 'mobx-state-tree';
 import { NextComponentType } from 'next';
 import App, { Container } from 'next/app';
 import { object } from 'prop-types';
@@ -40,7 +41,19 @@ export default class MyApp extends App<IProps> {
 
 	constructor(props) {
 		super(props);
+
 		this.store = initializeStore(props.isServer, props.initialState);
+
+		// mst 디버깅 로그
+		if (process.env.NODE_ENV === 'development') {
+			// 크롬 console 에 해당값의 변화가 있을 때 나타나게 함
+			onPatch(this.store, (patch) => {
+				console.log(patch);
+			});
+
+			// 크롬 mobx tools 에 MST 로 상태변화를 볼 수 있게 한다.
+			makeInspectable(this.store);
+		}
 	}
 
 	// IE10 대응
