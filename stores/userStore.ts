@@ -3,6 +3,9 @@ import { Instance, types } from 'mobx-state-tree';
 // 유저 모델
 const model = types
 	.model('userModel', {
+		/** 스토어 아이덴티티 */
+		identifier: types.optional(types.identifier, 'userModel'),
+
 		/** 사용자가 메시지를 읽었는지 여부 true/false */
 		isRead: types.optional(types.boolean, false),
 
@@ -17,7 +20,7 @@ const model = types
 		/** 유니크한 ID(소켓 ID) */
 		uniqueId: types.string
 	})
-	.actions((self) => ({
+	.actions(self => ({
 		/** 사용자가 메시지를 읽었는지 여부 true/false 세팅, 읽지 않았을 때 카운트 UP */
 		setReadValue(isUnread: boolean) {
 			self.isRead = isUnread;

@@ -24,7 +24,8 @@
   // perttier 설정
   "prettier.jsxSingleQuote": true,
   "prettier.tabWidth": 2,
-  "prettier.typescriptEnable": ["typescript","typescriptreact"],
+  "prettier.useTabs": true,
+  "prettier.typescriptEnable": ["typescript", "typescriptreact"],
   "prettier.printWidth": 80,
   "prettier.singleQuote": true,
   "prettier.bracketSpacing": true,
@@ -56,7 +57,7 @@
   "terminal.integrated.cursorStyle": "underline",
   "terminal.integrated.shellArgs.windows": ["/K", "chcp 65001"],
   "terminal.integrated.fontFamily": "Lucida console, Consolas, 'Courier New', monospace, 'Segoe UI emoji', 'Segoe UI Symbol'",
-  "terminal.integrated.fontSize":14,
+  "terminal.integrated.fontSize": 14,
 
   // 기타 설정
   "git.autofetch": true,

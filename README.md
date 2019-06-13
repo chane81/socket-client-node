@@ -229,7 +229,8 @@
 - ## styled-jsx
   - typescript 를 쓰는 환경에서 styled-jsx 를 쓰고자 할 때 아래를 설치
     ```
-      yarn add @types/styled-jsx
+      yarn add styled-jsx babel-plugin-styled-jsx
+      yarn add @types/styled-jsx --dev
     ```
 
 - ## scss 스타일을 쓰고 싶을 때 세팅
