@@ -3,9 +3,6 @@ import userStore from './userStore';
 
 // 채팅 메시지 모델
 const model = types.model('messageModel', {
-	/** 스토어 아이덴티티 */
-	identifier: types.optional(types.identifier, 'messageModel'),
-
 	/** 내가 보낸 메시지 인지여부 true/false  */
 	isSelf: types.boolean,
 

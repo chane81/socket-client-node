@@ -3,9 +3,6 @@ import { Instance, types } from 'mobx-state-tree';
 // 유저 모델
 const model = types
 	.model('userModel', {
-		/** 스토어 아이덴티티 */
-		identifier: types.optional(types.identifier, 'userModel'),
-
 		/** 사용자가 메시지를 읽었는지 여부 true/false */
 		isRead: types.optional(types.boolean, false),
 
